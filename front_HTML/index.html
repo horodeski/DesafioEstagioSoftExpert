@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/index.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Suite Store</title>
+</head>
+
+<body>
+    <div id="app">
+        <nav>
+            <a class="logo" href="#">Suite Store</a>
+            <ul>
+                <li><a href="pages/products.html">Products</a></li>
+                <li><a href="pages/categories.html">Categories</a></li>
+                <li><a href="pages/history.html">History</a></li>
+            </ul>
+            <button onclick="openCart()">
+                <i class='bx bx-cart'></i>
+            </button>
+        </nav>
+        <main>
+            <section class="hero-section">
+                <div class="hero-content">
+                    <div>
+                        <h1>Products for</h1>
+                        <h1>Performance Excellence</h1>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur molestias saepe
+                            exercitationem aspernatur nesciunt dolores, numquam ut magni ducimus illo commodi beatae
+                            dolore corrupti necessitatibus, ex rem officia sit ipsum?</p>
+                        <a href="#filter-search">
+                            <button>
+                                See more
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="all-midias">
+                    <i class='bx bxl-facebook-circle'></i>
+                    <i class='bx bxl-instagram-alt'></i>
+                    <i class='bx bx-envelope'></i>
+                </div>
+            </section>
+            <section id="filter-search" class="filter">
+                <h3>Encontre o seu produto mais rápido!</h3>
+                <form id="form-carrinho">
+                    <div id="primary-input" class="input-form">
+                        <select id="products-list">
+                            <option value="" selected disabled>Select a product</option>
+                        </select>
+                    </div>
+                    <div class="secondary-inputs">
+                        <div class="input-form">
+                            <input required id="amount" placeholder="Amount" min="1" type="number">
+                        </div>
+                        <div class="input-form">
+                            <input disabled   placeholder="Tax" id="tax" type="number">
+                        </div>
+                        <div class="input-form">
+                            <input disabled placeholder="Unit" id="unit" type="number">
+                        </div>
+                    </div>
+                    <button onclick="addToCart()" class="primary-btn">Add product to cart</button>
+                </form>
+            </section>
+            <section id="all-products"></section>
+            <section id="modalConfirm" class="hidden">
+                <div class="modal-content">
+                    <div class="header">
+                        <button onclick="closeModal()">
+                            <i class='bx bx-x'></i>
+                        </button>
+                        <h2>Purchase Deletion Confirmation</h2>
+                    </div>
+                    <p>You are about to delete an item from your shopping cart. Are you sure you want to proceed with
+                        this action? Please note that once deleted, the purchase cannot be recovered.</p>
+                    <div>
+                        <button class="primary-btn" onclick="closeModal()">Cancel</button>
+                        <button class="secondary-btn" onclick="deleteCart()">Yes, delete the purchase</button>
+                    </div>
+                </div>
+            </section>
+            <div id="cartModal" class="hidden">
+                <section class="carrinho">
+                    <button class="close-btn" onclick="closeCart()"><i class='bx bx-x'></i></button>
+                    <div id="alert-cart-emply">
+                        <img src="https://img.freepik.com/free-vector/supermarket-shopping-cart-concept-illustration_114360-22408.jpg?w=740&t=st=1708530374~exp=1708530974~hmac=5e21702deb72f198220d616f787a4c8fcc69a1db90bf9f8b852a1956f9d02c1b"
+                            alt="">
+                        <h2>
+                            Não há items no seu carrinho!
+                        </h2>
+                    </div>
+                    <div id="contentCart">
+
+                    </div>
+                    <div id="result"></div>
+                </section>
+            </div>
+            <section id="modalConfirm" class="hidden">
+                <div class="modal-content">
+                    <div class="header">
+                        <button onclick="closeModal()">
+                            <i class='bx bx-x'></i>
+                        </button>
+                        <h2>Purchase Deletion Confirmation</h2>
+                    </div>
+                    <p>You are about to delete an item from your shopping cart. Are you sure you want to proceed with
+                        this action? Please note that once deleted, the purchase cannot be recovered.</p>
+                    <div>
+                        <button class="primary-btn" onclick="closeModal()">Cancel</button>
+                        <button class="secondary-btn" onclick="(event) => cancelCart(event)">Yes, delete the purchase</button>
+                    </div>
+                </div>
+            </section>
+            <div id="cartModal" class="hidden">
+                <section class="carrinho">
+                    <button class="close-btn" onclick="closeCart()"><i class='bx bx-x'></i></button>
+                    <div id="alert-cart-emply">
+                        <img src="https://img.freepik.com/free-vector/supermarket-shopping-cart-concept-illustration_114360-22408.jpg?w=740&t=st=1708530374~exp=1708530974~hmac=5e21702deb72f198220d616f787a4c8fcc69a1db90bf9f8b852a1956f9d02c1b"
+                            alt="">
+                        <h2>
+                            Não há items no seu carrinho!
+                        </h2>
+                    </div>
+                    <div id="contentCart"></div>
+                    <div id="result"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="./JS/cart.js"></script>
+</body>
+
+</html>

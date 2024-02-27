@@ -1,0 +1,466 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    color: #333;
+    font-family: "Inter", sans-serif;
+}
+
+:root {
+    --primary-color: #6466f3;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    align-items: center;
+}
+
+
+.carrinho {
+    background-color: #fff;
+    width: 30vw;
+    padding: 2vw;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    position: relative;
+}
+
+nav {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    height: 7vh;
+    color: black;
+    position: fixed;
+    margin-top: 2vh;
+    border-radius: 20px;
+    z-index: 1;
+    font-weight: 600;
+    width: 67vw;
+    padding: 1vh 1vw;
+    background-color: black;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1vw;
+    align-items: center;
+}
+
+nav button {
+    border-radius: 10px;
+}
+
+nav button i {
+    font-size: 1.5em;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+}
+
+.logo {
+    font-size: 1.6em;
+    margin-right: 1vw;
+}
+
+button {
+    border: none;
+    padding: 0.5vw;
+    cursor: pointer;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    padding: 0.8vh 3vw;
+    font-weight: bold;
+}
+
+.secondary-btn {
+    padding: 0.8vh 3vw;
+    background-color: #f1f1f1;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+
+
+.add-product #unit {
+    width: 5vw;
+}
+
+input,
+select {
+    border-radius: 7px;
+    background-color: #f5f5f5;
+    border: 1px solid #e5e5e5;
+    padding: .5vw;
+    width: 100%;
+}
+
+form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: .5vw;
+}
+
+form div {
+    display: flex;
+    gap: .5vw;
+}
+
+#all-products {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1vh;
+}
+
+#all-products,
+.filter {
+    padding: 7vh 16vw;
+}
+
+.products input {
+    width: 15vw;
+}
+
+.products-table,
+.categories-table,
+.table-history table{
+    padding: 0vh 16vw;
+}
+
+
+.filter {
+    background-color: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.form-carrinho button {
+    width: 100%;
+}
+
+
+.secondary-inputs {
+    display: flex;
+    justify-content: space-between;
+}
+
+#amount {
+    width: 46vw;
+}
+
+#tax {
+    width: 10vw;
+}
+
+#content {
+    border-bottom: 1px solid #ccc;
+}
+
+.product-td {
+    width: 20vw;
+}
+
+table {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 100%;
+    background-color: #f1f1f1;
+    margin-bottom: 25vh;
+    overflow: hidden;
+}
+
+.active {
+    color: var(--primary-color)
+}
+
+table td {
+    padding: .5vw;
+}
+
+table td:last-child {
+    text-align: center;
+}
+
+.history main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.history td {
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+.history table {
+    border: none;
+    margin: 5vh 0;
+    background-color: #fff;
+    margin-bottom: 25vh;
+}
+
+.history .table-history {
+    width: 100%;
+}
+
+#result {
+    display: flex;
+    text-align: end;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1vh;
+    margin-top: 2vh;
+}
+
+.categories input {
+    width: 27vw
+}
+
+.result .group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1vw;
+}
+
+.result .group span:nth-child(1) {
+    font-weight: 600;
+}
+
+.hero-section {
+    width: 100vw;
+    height: 100vh;
+    background: url(https://media.istockphoto.com/id/1387134070/pt/foto/smart-store-management-systems-concept.jpg?s=2048x2048&w=is&k=20&c=LCAOUkn05vy_juMhBZRBmA1gNbm_kOpXJ0gyVsRS0JM=) no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.hero-content {
+    height: 100vh;
+    position: relative;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.382);
+}
+
+.hero-content div {
+    gap: 1vh;
+    flex-direction: column;
+    align-items: flex-start;
+    display: flex;
+    padding: 40vh 16vw;
+
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1vw;
+}
+
+
+.all-midias {
+    position: absolute;
+    right: 2vw;
+    flex-direction: column;
+    gap: 2vh;
+    z-index: 3;
+    bottom: 50%;
+    display: flex;
+}
+
+.all-midias i {
+    color: white;
+    font-size: 2em;
+}
+
+.hero-content p {
+    color: white;
+    width: 30vw;
+}
+
+.hero-content h1 {
+    color: white;
+    font-size: 3em;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#modalConfirm,
+#cartModal, #modalHistory {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.116);
+    top: 0;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 10px;
+    position: relative;
+    z-index: 200;
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2vw;
+    border: 1px solid #c7c7c7;
+    gap: 2vh;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.modal-content h2 {
+    text-align: center;
+}
+
+.modal-content form {
+    width: 40vw;
+}
+
+#modalConfirm {
+    z-index: 200;
+}
+
+.modal-content .header button,
+#cartModal .close-btn {
+    background-color: transparent;
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    right: 1vh;
+    top: 1vh;
+    cursor: pointer;
+}
+
+.tax span {
+    color: red
+}
+
+#alert-cart-emply img {
+    width: 23vw;
+}
+
+#alert-cart-emply {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#alert-cart-emply h2 {
+    color: #666;
+}
+
+#result input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    width: 3vw;
+}
+
+
+.products main {
+    gap: 6vh;
+}
+
+.form-header {
+    padding: 21vh 0 5vh 0vw;
+    margin-bottom: 3vh;
+    display: flex;
+    background-color: #f1f1f1;
+    gap: 3vh;
+    width: 100vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-header form {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.modal-body .card, #cartModal .card {
+    width: -webkit-fill-available !important;
+}
+
+.card {
+    display: flex;
+    align-items: flex-start;
+    height: 6vh;
+    border: 1px solid rgb(197, 197, 197);
+    border-radius: 10px;
+    width: 20vw;
+    padding: 1vw;
+    justify-content: space-between;
+}
+
+.card i {
+    font-size: 1.5em;
+}
+
+.card .content {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.card .btn-price-unid {
+    display: flex;
+    align-items: center;
+}
+
+.card .unid-price {
+    display: flex;
+    gap: .5vw;
+}
+
+.card .unid-price span:nth-child(2) {
+    font-weight: 600;
+}
+
+#contentCart {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.card button {
+    padding: .5vw;
+    border-radius: 8px;
+}
+
+#tax, #unit {
+    cursor: not-allowed;
+}
