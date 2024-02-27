@@ -1,8 +1,7 @@
 
 <?php
 error_log('Sou um log');
-echo "Olá mundo";
-
+echo "ouro de horodeski";
 
 $host = "pgsql_desafio";
 $db = "applicationphp";
