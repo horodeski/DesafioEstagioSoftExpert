@@ -1,5 +1,5 @@
 <?php
-include ('../index.php');
+include('../index.php');
 
     function getCategories(){
         $categories = myPDO->query('SELECT * FROM categories');
