@@ -14,11 +14,11 @@ define("myPDO", new PDO("pgsql:host=$host;dbname=$db", $user, $pw));
 
 // exemplo de fetch
 
-$statement1 = myPDO->query("SELECT * FROM mytable");
-$data = $statement1->fetch();
+// $statement1 = myPDO->query("SELECT * FROM mytable");
+// $data = $statement1->fetch();
 
 // echo "<br>";
-print_r($data);
+// print_r($data);
 
 // exemplo de fetch2
 // $statement2 = $myPDO->query("SELECT * FROM mytable");
