@@ -4,6 +4,8 @@ const emplyCart = document.getElementById("alert-cart-emply")
 const modalConfirm = document.getElementById("modalConfirm");
 const contentCart = document.getElementById("contentCart");
 
+const url = "http://localhost/routers/categories.php"
+
 const getCategories = () =>
     JSON.parse(localStorage.getItem("dbCategory")) ?? [];
 const setCategories = (dbCategory) =>
@@ -22,14 +24,17 @@ const categories = readCategory();
 const cart = readCart();
 const history = readHistory();
 
+
+fetch(url).then((response) => { return response.json(); }).then((data) => {
+    const categories = data
+})
+
 const createCategory = (category) => {
     categories.push(category);
     setCategories(categories);
 };
 
 const isValidFields = () => {
-    const categoryNameInput = document.getElementById("category-title").value;
-    var regex = /(<([^>]+)>)/ig;
     const form = document.getElementById("form-category")
 
     if (!form.checkValidity()) {

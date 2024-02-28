@@ -1,4 +1,7 @@
 <?php
+header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Methods: GET, POST, DELETE");
+header("Access-Control-Allow-Origin: *");
 include('../index.php');
 
     function getCategories(){
