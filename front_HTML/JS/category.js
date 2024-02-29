@@ -7,9 +7,6 @@ const modalConfirm = document.getElementById("modalConfirm");
 const contentCart = document.getElementById("contentCart");
 const form = document.getElementById("form-category");
 
-
-const setCategories = (dbCategory) =>
-    localStorage.setItem("dbCategory", JSON.stringify(dbCategory));
 const getCart = () => JSON.parse(localStorage.getItem("dbCart")) || [];
 const getHistory = () => JSON.parse(localStorage.getItem("dbHistory")) || [];
 
@@ -18,21 +15,20 @@ const setHistory = (dbHistory) => localStorage.setItem("dbHistory", JSON.stringi
 
 const getCategories = fetch(url).then((res) => { return res.json(); });
 
-
 const postCategory = () => {
     form.addEventListener("submit", async event => {
-
-        const data = new FormData(form);
-       
-        try {
-            const res = await fetch(url, {
-                method: 'POST',
-                body: data
-            });
-            const resData = await res.json();
-            console.log(resData);
-        } catch (error) {
-            console.log(error.message);
+        if (isValidFields()) {
+            const data = new FormData(form);
+            try {
+                const res = await fetch(url, {
+                    method: 'POST',
+                    body: data
+                });
+                const resData = await res.json();
+                console.log(resData);
+            } catch (error) {
+                console.log(error.message);
+            }
         }
     })
 }
@@ -102,18 +98,18 @@ const verifyEmptyCart = () => {
     }
 };
 
-const saveCategory = () => {
+// const saveCategory = () => {
 
-    const categoryNameInput = document.getElementById("category-title").value;
-    
-    if (isValidFields()) {
-        postCategory();
-        const category = {
-            name: categoryNameInput.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
-            tax: document.getElementById("category-tax").value,
-        };
-    }
-};
+//     const categoryNameInput = document.getElementById("category-title").value;
+
+//     if (isValidFields()) {
+//         postCategory();
+//         const category = {
+//             name: categoryNameInput.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+//             tax: document.getElementById("category-tax").value,
+//         };
+//     }
+// };
 
 const cartToHistory = () => {
 
@@ -130,7 +126,6 @@ const cartToHistory = () => {
 
 async function updateTable() {
     let categories = await getCategories
-
 
     tbody.innerHTML = "";
     categories.forEach((category, index) => {

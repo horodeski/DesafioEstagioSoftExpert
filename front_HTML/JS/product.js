@@ -1,37 +1,41 @@
 tbody = document.querySelector("tbody");
 select = document.querySelector("select");
 const emplyCart = document.getElementById("alert-cart-emply")
+const form = document.getElementById("form-product");
 
-const getProducts = () => JSON.parse(localStorage.getItem("dbProduct")) || [];
-const getCategories = () => JSON.parse(localStorage.getItem("dbCategory")) || [];
+const url_product = "http://localhost/routers/products.php"
+
+// const getProducts = () => JSON.parse(localStorage.getItem("dbProduct")) || [];
+// const getCategories = () => JSON.parse(localStorage.getItem("dbCategory")) || [];
 const getCart = () => JSON.parse(localStorage.getItem("dbCart")) || [];
 const getHistory = () => JSON.parse(localStorage.getItem("dbHistory")) || [];
 
-const setProducts = (dbProduct) => localStorage.setItem("dbProduct", JSON.stringify(dbProduct));
+// const setProducts = (dbProduct) => localStorage.setItem("dbProduct", JSON.stringify(dbProduct));
 const setCart = (dbCart) => localStorage.setItem("dbCart", JSON.stringify(dbCart));
 const setHistory = (dbHistory) => localStorage.setItem("dbHistory", JSON.stringify(dbHistory));
 
-const readProduct = () => getProducts();
-const readCategory = () => getCategories();
+// const readProduct = () => getProducts();
+// const readCategory = () => getCategories();
 const readCart = () => getCart();
 const readHistory = () => getHistory();
 
-const categories = readCategory();
-const products = readProduct();
+// const categories = readCategory();
+// const products = readProduct();
 const cart = readCart();
 const history = readHistory();
 
-for (const i of categories) {
-    const option = document.createElement('option');
-    option.textContent = i.name;
-    option.value = i.name;
-    select.appendChild(option);
-}
+const getProducts = fetch(url_product).then((res) => {
+    return res.json();
+})
 
-const createProduct = (product) => {
-    products.push(product);
-    setProducts(products);
-}
+
+// for (const i of categories) {
+//     const option = document.createElement('option');
+//     option.textContent = i.name;
+//     option.value = i.name;
+//     select.appendChild(option);
+// }
+
 
 const isValidFields = () => {
     const form = document.getElementById("form-product")
@@ -155,7 +159,6 @@ const updateCards = () => {
     }
 };
 
-console.log(products)
 
 
 const saveProduct = () => {
@@ -180,16 +183,18 @@ const saveProduct = () => {
 }
 
 
-const updateTable = () => {
+const updateTable = async () => {
+    let products = await getProducts;
+    console.log(products)
     tbody.innerHTML = "";
     products.forEach((prod, index) => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-        <td>${prod.id}</td>
+        <td>${prod.code}</td>
         <td>${prod.name}</td>
         <td>${prod.amount}</td>
-        <td>${prod.unit}</td>
-        <td>${prod.category}</td>
+        <td>${prod.price}</td>
+        <td>${prod.category_code}</td>
         <td>$${prod.taxedUnit}</td>
         <td><button class="buttonDelete" onclick="deleteProduct(${index})"><i class='bx bxs-trash-alt' ></i></button></td>
         `;
