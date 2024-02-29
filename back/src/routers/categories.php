@@ -10,7 +10,9 @@ function runRequestMethod()
             echo getCategories();
             break;
         case "POST":
-            echo postCategory();
+            $name = $_POST["name"];
+            $tax = $_POST["tax"];
+            echo postCategory($name, $tax);
             break;
         case "DELETE":
             echo deleteCategory();

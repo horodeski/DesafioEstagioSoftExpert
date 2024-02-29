@@ -1,7 +1,7 @@
 <?php
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: GET, POST, DELETE");
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, PUT");
 include('../index.php');
 
     function getCategories(){
@@ -10,8 +10,8 @@ include('../index.php');
         return json_encode($categories);
     };
 
-    function postCategory() {
-        $addCategory = myPDO->prepare("INSERT INTO categories(NAME, TAX, CODE) VALUES ('shgeovana', 5, 999)");
+    function postCategory($name, $tax) {
+        $addCategory = myPDO->prepare("INSERT INTO categories(NAME, TAX) VALUES ('{$name}', {$tax})");
         $addCategory->execute();
     };
 

@@ -1,13 +1,13 @@
+const url = "http://localhost/routers/categories.php"
+
 const tbody = document.querySelector("tbody");
 const cartModal = document.getElementById("cartModal");
 const emplyCart = document.getElementById("alert-cart-emply")
 const modalConfirm = document.getElementById("modalConfirm");
 const contentCart = document.getElementById("contentCart");
+const form = document.getElementById("form-category");
 
-const url = "http://localhost/routers/categories.php"
 
-const getCategories = () =>
-    JSON.parse(localStorage.getItem("dbCategory")) ?? [];
 const setCategories = (dbCategory) =>
     localStorage.setItem("dbCategory", JSON.stringify(dbCategory));
 const getCart = () => JSON.parse(localStorage.getItem("dbCart")) || [];
@@ -16,23 +16,38 @@ const getHistory = () => JSON.parse(localStorage.getItem("dbHistory")) || [];
 const setCart = (dbCart) => localStorage.setItem("dbCart", JSON.stringify(dbCart));
 const setHistory = (dbHistory) => localStorage.setItem("dbHistory", JSON.stringify(dbHistory));
 
-const readCategory = () => getCategories();
+const getCategories = fetch(url).then((res) => { return res.json(); });
+
+
+const postCategory = () => {
+    form.addEventListener("submit", async event => {
+
+        const data = new FormData(form);
+       
+        try {
+            const res = await fetch(url, {
+                method: 'POST',
+                body: data
+            });
+            const resData = await res.json();
+            console.log(resData);
+        } catch (error) {
+            console.log(error.message);
+        }
+    })
+}
+
+
 const readCart = () => getCart();
 const readHistory = () => getHistory();
 
-const categories = readCategory();
 const cart = readCart();
 const history = readHistory();
 
-
-fetch(url).then((response) => { return response.json(); }).then((data) => {
-    const categories = data
-})
-
-const createCategory = (category) => {
-    categories.push(category);
-    setCategories(categories);
-};
+// function createCategory(category) {
+//     data.push(category);
+//     postCategory(category);
+// };
 
 const isValidFields = () => {
     const form = document.getElementById("form-category")
@@ -64,13 +79,13 @@ function closeCart() {
 const deleteItemCart = (index) => {
     cart.splice(index, 1);
     setCart(cart);
-    window.location.reload();
+    // window.location.reload();
 }
 
 const deleteCart = (index) => {
     cart.splice(index);
     setCart(cart);
-    window.location.reload();
+    // window.location.reload();
 }
 
 const calculateTaxedUnit = (taxPercentage, originalUnit) => {
@@ -88,19 +103,20 @@ const verifyEmptyCart = () => {
 };
 
 const saveCategory = () => {
+
     const categoryNameInput = document.getElementById("category-title").value;
     
     if (isValidFields()) {
-            const category = {
-                id: Math.random().toString(16).slice(2),
-                name: categoryNameInput.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
-                tax: document.getElementById("category-tax").value,
-            };
-            createCategory(category);
+        postCategory();
+        const category = {
+            name: categoryNameInput.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+            tax: document.getElementById("category-tax").value,
+        };
     }
 };
 
 const cartToHistory = () => {
+
     history.push(Object.assign({
         id: Math.random().toString(16).slice(2),
         parseTotal: document.getElementById("parseTotal").value,
@@ -112,12 +128,15 @@ const cartToHistory = () => {
     deleteCart()
 }
 
-const updateTable = () => {
+async function updateTable() {
+    let categories = await getCategories
+
+
     tbody.innerHTML = "";
     categories.forEach((category, index) => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-        <td>${category.id}</td>
+        <td>${category.code}</td>
         <td>${category.name}</td>
         <td>${category.tax}%</td>
         <td><button class="buttonDelete" onclick="deleteCategory(${index})"><i class='bx bxs-trash-alt' ></i></button></td>
@@ -131,7 +150,7 @@ const deleteCategory = (index) => {
     if (confirm) {
         categories.splice(index, 1);
         setCategories(categories);
-        window.location.reload();
+        // window.location.reload();
     }
 };
 
@@ -171,8 +190,8 @@ const updateCards = () => {
 
         const result = document.getElementById("result")
         result.innerHTML = `
-            <div>
-                <div class="group">
+        <div>
+        <div class="group">
                 <span>Total:</span>
                 <input disabled id="parseTotal" value="${parseTotal.toFixed(2)}" />
                 </div>
@@ -194,8 +213,8 @@ const updateCards = () => {
     }
 };
 
-document.addEventListener("DOMContentLoaded", function () {
-    updateTable();
+updateTable();
+addEventListener("DOMContentLoaded", () => {
     verifyEmptyCart();
     updateCards();
 });
