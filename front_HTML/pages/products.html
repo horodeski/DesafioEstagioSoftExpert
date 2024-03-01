@@ -27,15 +27,15 @@
                 <h1>Produtos</h1>
                 <form id="form-product">
                     <div class="group">
-                        <input id="product-name" placeholder="Product name" type="text">
+                        <input id="product-name" name="name" required placeholder="Product name" type="text">
                     </div>
                     <div class="group">
-                        <input id="product-amount" placeholder="Amount" min="1" type="number">
-                        <input id="product-unit" step="any" placeholder="Unit Price" min="1" required type="number">
-                        <select name="" required="product-category">
+                        <input id="product-amount" name="amount"  required placeholder="Amount" min="1" type="number">
+                        <input id="product-unit" name="price" step="any" placeholder="Unit Price" min="1" required type="number">
+                        <select name="category_code" required id="product-category">
                         </select>
                     </div>
-                    <button class="primary-btn" onclick="saveProduct()">Add product</button>
+                    <button class="primary-btn" onclick="postProducts()">Add product</button>
                 </form>
             </section>
             <section class="products-table">
@@ -72,9 +72,9 @@
                 </div>
             </section>
             <div id="cartModal" class="hidden">
-                <section class="carrinho">
+                <section class="carrinho" >
                     <button class="close-btn" onclick="closeCart()"><i class='bx bx-x'></i></button>
-                    <div id="alert-cart-emply">
+                    <div id="alert-cart-emply" class="hidden">
                         <img src="https://img.freepik.com/free-vector/supermarket-shopping-cart-concept-illustration_114360-22408.jpg?w=740&t=st=1708530374~exp=1708530974~hmac=5e21702deb72f198220d616f787a4c8fcc69a1db90bf9f8b852a1956f9d02c1b"
                             alt="">
                         <h2>

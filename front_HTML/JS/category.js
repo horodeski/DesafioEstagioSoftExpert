@@ -35,15 +35,8 @@ const postCategory = () => {
 
 
 const readCart = () => getCart();
-const readHistory = () => getHistory();
 
 const cart = readCart();
-const history = readHistory();
-
-// function createCategory(category) {
-//     data.push(category);
-//     postCategory(category);
-// };
 
 const isValidFields = () => {
     const form = document.getElementById("form-category")
@@ -98,19 +91,6 @@ const verifyEmptyCart = () => {
     }
 };
 
-// const saveCategory = () => {
-
-//     const categoryNameInput = document.getElementById("category-title").value;
-
-//     if (isValidFields()) {
-//         postCategory();
-//         const category = {
-//             name: categoryNameInput.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
-//             tax: document.getElementById("category-tax").value,
-//         };
-//     }
-// };
-
 const cartToHistory = () => {
 
     history.push(Object.assign({
@@ -145,7 +125,6 @@ const deleteCategory = (index) => {
     if (confirm) {
         categories.splice(index, 1);
         setCategories(categories);
-        // window.location.reload();
     }
 };
 

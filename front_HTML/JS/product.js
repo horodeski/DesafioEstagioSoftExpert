@@ -3,38 +3,44 @@ select = document.querySelector("select");
 const emplyCart = document.getElementById("alert-cart-emply")
 const form = document.getElementById("form-product");
 
-const url_product = "http://localhost/routers/products.php"
+const url_products = "http://localhost/routers/products.php"
+const url_categories = "http://localhost/routers/categories.php"
 
-// const getProducts = () => JSON.parse(localStorage.getItem("dbProduct")) || [];
-// const getCategories = () => JSON.parse(localStorage.getItem("dbCategory")) || [];
-const getCart = () => JSON.parse(localStorage.getItem("dbCart")) || [];
-const getHistory = () => JSON.parse(localStorage.getItem("dbHistory")) || [];
-
-// const setProducts = (dbProduct) => localStorage.setItem("dbProduct", JSON.stringify(dbProduct));
-const setCart = (dbCart) => localStorage.setItem("dbCart", JSON.stringify(dbCart));
-const setHistory = (dbHistory) => localStorage.setItem("dbHistory", JSON.stringify(dbHistory));
-
-// const readProduct = () => getProducts();
-// const readCategory = () => getCategories();
-const readCart = () => getCart();
-const readHistory = () => getHistory();
-
-// const categories = readCategory();
-// const products = readProduct();
-const cart = readCart();
-const history = readHistory();
-
-const getProducts = fetch(url_product).then((res) => {
+const getProducts = fetch(url_products).then((res) => {
     return res.json();
 })
+const getCategories = fetch(url_categories).then((res) => { return res.json(); });
 
+async function postProducts() {
+    form.addEventListener("submit", async event => {
+        event.preventDefault();
+        if (isValidFields()) {
+            const data = new FormData(form);
+            
+            try {
+                const res = await fetch(url_products, {
+                    method: 'POST',
+                    body: data,
+                });
+                window.location.reload()
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+    })
+}
 
-// for (const i of categories) {
-//     const option = document.createElement('option');
-//     option.textContent = i.name;
-//     option.value = i.name;
-//     select.appendChild(option);
-// }
+async function selectCategories() {
+    let categories = await getCategories
+    for (const i of categories) {
+        const option = document.createElement('option');
+        option.textContent = i.name;
+        option.value = i.code;
+        select.appendChild(option);
+    }
+}
+
+selectCategories()
 
 
 const isValidFields = () => {
@@ -81,83 +87,83 @@ const calculateTaxedUnit = (taxPercentage, originalUnit) => {
     return taxedUnit.toFixed(2);
 }
 
-const verifyEmptyCart = () => {
-    if (cart.length > 0) {
-        emplyCart.classList.add("hidden");
-        contentCart.classList.remove("hidden");
-    }
-};
+// const verifyEmptyCart = () => {
+//     if (cart.length > 0) {
+//         emplyCart.classList.add("hidden");
+//         contentCart.classList.remove("hidden");
+//     }
+// };
 
-const cartToHistory = () => {
-    history.push(Object.assign({
-        id: Math.random().toString(16).slice(2),
-        parseTotal: document.getElementById("parseTotal").value,
-        total: document.getElementById("total").value,
-        taxValue: document.getElementById("taxValue").value,
-        products: cart
-    }));
-    setHistory(history);
-    deleteCart()
-}
+// const cartToHistory = () => {
+//     history.push(Object.assign({
+//         id: Math.random().toString(16).slice(2),
+//         parseTotal: document.getElementById("parseTotal").value,
+//         total: document.getElementById("total").value,
+//         taxValue: document.getElementById("taxValue").value,
+//         products: cart
+//     }));
+//     setHistory(history);
+//     deleteCart()
+// }
 
-const updateCards = () => {
-    contentCart.innerHTML = "";
-    let taxValue = 0;
-    let total = 0;
-    let parseTotal = 0;
-    verifyEmptyCart();
+// const updateCards = () => {
+//     contentCart.innerHTML = "";
+//     let taxValue = 0;
+//     let total = 0;
+//     let parseTotal = 0;
+//     verifyEmptyCart();
 
-    cart.forEach((productItem) => {
-        const div = document.createElement("div");
-        const taxValueAccount = productItem.amount * productItem.tax;
-        const totalAccount = productItem.amount * productItem.unit;
+//     cart.forEach((productItem) => {
+//         const div = document.createElement("div");
+//         const taxValueAccount = productItem.amount * productItem.tax;
+//         const totalAccount = productItem.amount * productItem.unit;
 
-        div.innerHTML = `
-            <div class="card">
-                <div class="content">
-                    <h3>${productItem.product}</h3>
-                    <span>${productItem.tax} Tax</span>
-                </div>
-                <div class="btn-price-unid">
-                    <div class="unid-price">
-                        <span>${productItem.amount} (unds.)</span>
-                        <span>$${productItem.unit}</span>
-                    </div>
-                    <button onclick="deleteItemCart(${cart.indexOf(productItem)})"><i class='bx bx-trash'></i></button>
-                </div>
-            </div>
-        `;
-        contentCart.appendChild(div);
-        parseTotal += totalAccount;
-        taxValue += taxValueAccount;
-        total += totalAccount + taxValueAccount
-    });
-    if (cart.length > 0) {
+//         div.innerHTML = `
+//             <div class="card">
+//                 <div class="content">
+//                     <h3>${productItem.product}</h3>
+//                     <span>${productItem.tax} Tax</span>
+//                 </div>
+//                 <div class="btn-price-unid">
+//                     <div class="unid-price">
+//                         <span>${productItem.amount} (unds.)</span>
+//                         <span>$${productItem.unit}</span>
+//                     </div>
+//                     <button onclick="deleteItemCart(${cart.indexOf(productItem)})"><i class='bx bx-trash'></i></button>
+//                 </div>
+//             </div>
+//         `;
+//         contentCart.appendChild(div);
+//         parseTotal += totalAccount;
+//         taxValue += taxValueAccount;
+//         total += totalAccount + taxValueAccount
+//     });
+//     if (cart.length > 0) {
 
-        const result = document.getElementById("result")
-        result.innerHTML = `
-            <div>
-                <div class="group">
-                <span>Total:</span>
-                <input disabled id="parseTotal" value="${parseTotal.toFixed(2)}" />
-                </div>
-                <div class="group tax">
-                <span>+ tax:</span>
-                <input disabled id="taxValue" value="${taxValue.toFixed(2)}" />
-                </div>
-                <div class="group">
-                <span>Final value:</span>
-                <input disabled id="total" value="${total.toFixed(2)}" />
-                </div>
-                </div>
-            <div>
-                <button class="secondary-btn" onclick="openModal()">Cancel</button>
-                <button onclick="cartToHistory()"  class="primary-btn">Finish</button>
-            </div>
+//         const result = document.getElementById("result")
+//         result.innerHTML = `
+//             <div>
+//                 <div class="group">
+//                 <span>Total:</span>
+//                 <input disabled id="parseTotal" value="${parseTotal.toFixed(2)}" />
+//                 </div>
+//                 <div class="group tax">
+//                 <span>+ tax:</span>
+//                 <input disabled id="taxValue" value="${taxValue.toFixed(2)}" />
+//                 </div>
+//                 <div class="group">
+//                 <span>Final value:</span>
+//                 <input disabled id="total" value="${total.toFixed(2)}" />
+//                 </div>
+//                 </div>
+//             <div>
+//                 <button class="secondary-btn" onclick="openModal()">Cancel</button>
+//                 <button onclick="cartToHistory()"  class="primary-btn">Finish</button>
+//             </div>
 
-        `;
-    }
-};
+//         `;
+//     }
+// };
 
 
 
@@ -185,7 +191,7 @@ const saveProduct = () => {
 
 const updateTable = async () => {
     let products = await getProducts;
-    console.log(products)
+
     tbody.innerHTML = "";
     products.forEach((prod, index) => {
         const tr = document.createElement("tr");
@@ -194,8 +200,8 @@ const updateTable = async () => {
         <td>${prod.name}</td>
         <td>${prod.amount}</td>
         <td>${prod.price}</td>
-        <td>${prod.category_code}</td>
-        <td>$${prod.taxedUnit}</td>
+        <td>${prod.category}</td>
+        <td>$${prod.tax}</td>
         <td><button class="buttonDelete" onclick="deleteProduct(${index})"><i class='bx bxs-trash-alt' ></i></button></td>
         `;
         tbody.appendChild(tr);
@@ -217,8 +223,8 @@ const deleteProduct = (index) => {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    updateTable();
-    verifyEmptyCart();
-    updateCards();
-});
+updateTable();
+// document.addEventListener("DOMContentLoaded", function () {
+//     verifyEmptyCart();
+//     updateCards();
+// });
