@@ -9,7 +9,7 @@ const contentCart = document.getElementById("contentCart");
 
 const url_products = "http://localhost/routers/products.php"
 const url_orders = "http://localhost/routers/order.php"
-const url_order_item = "http://localhost/routers/order_items.php"
+const url_order_item = "http://localhost/routers/order_item.php"
 
 const getCart = () => JSON.parse(localStorage.getItem("dbCart")) || [];
 const setCart = (dbCart) => localStorage.setItem("dbCart", JSON.stringify(dbCart));
@@ -17,7 +17,6 @@ const readCart = () => getCart();
 
 const cart = readCart();
 
-console.log(cart)
 
 const getProducts = fetch(url_products).then((res) => {
     return res.json();
@@ -119,64 +118,93 @@ function objectToFormData(obj) {
     return formData;
 }
 
-const postHistory = async (history, order_item) => {
+const postOrder = async (history) => {
+    console.log(history)
     try {
-        console.log(history);
         const res = await fetch(url_orders, {
             method: 'POST',
             body: history,
         })
 
-        const res2 = await fetch(url_orders, {
-            method: 'POST',
-            body: order_item
-        })
     } catch (error) {
         console.log(error.message);
     };
-
 }
+
+const postOrderItem = async (f_item) => {
+    console.log(f_item)
+    try {
+        const res = await fetch(url_order_item, {
+            method: 'POST',
+            body: f_item,
+        })
+        const resData = await res.json();
+        console.log(resData);
+
+    } catch (error) {
+        console.log(error.message);
+    };
+}
+
+
 
 
 const cartToHistory = async () => {
+    
     const order = {
-        code: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+        code: Math.random().toString(16).slice(2),
         total: document.getElementById("total").value,
         tax: document.getElementById("taxValue").value,
     }
+    console.log(order);
     const teste = objectToFormData(order)
+    postOrder(teste);
 
-    cart.forEach((i) => {
-        const order_item = {
-            order_code: teste.code,
-            product_code: i.code,
-            amount: i.amount,
-            price: i.price,
-            tax: i.tax,
-        };
-        postHistory(teste, order_item);
-    })
-
-
-    deleteCart()
+    // cart.forEach((i) => {
+    //     let order_item = {
+    //         order_code: order.code,
+    //         product_code: i.code,
+    //         amount: i.amount,
+    //         price: i.price,
+    //         tax: i.tax,
+    //     };
+    //     console.log(order_item)
+    //     let teste2 = objectToFormData(order_item)
+    //     postOrderItem(teste2);
+    // })
+    for (let item of cart){
+        let order_item = {
+            order_code: order.code,
+            product_code: item.code,
+            amount: item.amount,
+            price: item.price,
+            tax: item.tax,
+        }
+        console.log(order_item)
+        let f_item = objectToFormData(order_item)
+        postOrderItem(f_item);
+    }
+    
+    
+    // deleteCart()
 }
 
-console.log(cart.map(i => i))
+
 
 const isValidFields = () => document.getElementById("form-carrinho").reportValidity();
 
 
 addToCart = async () => {
     let products = await getProducts;
-
+    
     const selectedProductName = document.getElementById("products-list").value;
     const selectedProduct = products.find(product => product.code == selectedProductName);
-
+    
     console.log(products.find(product => product.code == selectedProductName))
-
-
+    
+    
     if (selectedProduct) {
-
+        
         const cartItem = {
             code: selectedProduct.code,
             name: selectedProduct.name,

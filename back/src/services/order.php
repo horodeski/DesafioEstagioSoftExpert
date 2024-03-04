@@ -10,8 +10,8 @@ include ('../index.php');
         return json_encode($order);
     };
 
-    function postOrder($total, $tax) {
-        $addPRoduct = myPDO->prepare("INSERT INTO orders(total, tax) VALUES ($total, $tax)");
+    function postOrder($code, $total, $tax) {
+        $addPRoduct = myPDO->prepare("INSERT INTO orders(code, total, tax) VALUES ('$code', $total, $tax)");
         $addPRoduct->execute();
     };
 

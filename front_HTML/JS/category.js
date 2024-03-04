@@ -16,7 +16,7 @@ const setHistory = (dbHistory) => localStorage.setItem("dbHistory", JSON.stringi
 const getCategories = fetch(url).then((res) => { return res.json(); });
 
 const postCategory = () => {
-    form.addEventListener("submit", async event => {
+    form.addEventListener("submit", async () => {
         if (isValidFields()) {
             const data = new FormData(form);
             try {
@@ -24,8 +24,6 @@ const postCategory = () => {
                     method: 'POST',
                     body: data
                 });
-                const resData = await res.json();
-                console.log(resData);
             } catch (error) {
                 console.log(error.message);
             }

@@ -10,9 +10,10 @@ function runRequestMethod()
             echo getOrder();
             break;
         case "POST":
+            $code = $_POST["code"];
             $total = $_POST["total"];
             $tax = $_POST["tax"];
-            echo postOrder($total, $tax);
+            echo postOrder($code, $total, $tax);
             break;
     }
 }

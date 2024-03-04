@@ -18,10 +18,12 @@ const getProducts = fetch(url_products).then((res) => {
     return res.json();
 })
 
+
 const allProductsSection = document.getElementById("all-products");
 
 const updateTable = async () => {
     const history = await getOrders;
+    console.log(history)
     tbodyContent.innerHTML = "";
     history.forEach((tableItem) => {
         const tr = document.createElement("tr");
