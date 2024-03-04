@@ -138,40 +138,22 @@ const postOrderItem = async (f_item) => {
             method: 'POST',
             body: f_item,
         })
-        const resData = await res.json();
-        console.log(resData);
-
     } catch (error) {
         console.log(error.message);
     };
 }
 
 
-
-
 const cartToHistory = async () => {
-    
     const order = {
         code: Math.random().toString(16).slice(2),
         total: document.getElementById("total").value,
         tax: document.getElementById("taxValue").value,
     }
-    console.log(order);
+
     const teste = objectToFormData(order)
     postOrder(teste);
 
-    // cart.forEach((i) => {
-    //     let order_item = {
-    //         order_code: order.code,
-    //         product_code: i.code,
-    //         amount: i.amount,
-    //         price: i.price,
-    //         tax: i.tax,
-    //     };
-    //     console.log(order_item)
-    //     let teste2 = objectToFormData(order_item)
-    //     postOrderItem(teste2);
-    // })
     for (let item of cart){
         let order_item = {
             order_code: order.code,
@@ -185,8 +167,7 @@ const cartToHistory = async () => {
         postOrderItem(f_item);
     }
     
-    
-    // deleteCart()
+    deleteCart()
 }
 
 

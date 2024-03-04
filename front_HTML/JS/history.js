@@ -8,6 +8,7 @@ const modalConfirm = document.getElementById("modalConfirm");
 const contentCart = document.getElementById("contentCart");
 
 const url_orders = "http://localhost/routers/order.php"
+const url_order_item = "http://localhost/routers/order_item.php"
 const url_products = "http://localhost/routers/products.php"
 
 const getOrders = fetch(url_orders).then((res) => {
@@ -15,6 +16,10 @@ const getOrders = fetch(url_orders).then((res) => {
 })
 
 const getProducts = fetch(url_products).then((res) => {
+    return res.json();
+})
+
+const getOrderItem = fetch(url_order_item).then((res) => {
     return res.json();
 })
 
@@ -27,7 +32,7 @@ const updateTable = async () => {
     tbodyContent.innerHTML = "";
     history.forEach((tableItem) => {
         const tr = document.createElement("tr");
-        const uniqueButtonId = `viewButton_${tableItem.id}`;
+        const uniqueButtonId = `viewButton_${tableItem.code}`;
         tr.innerHTML = `
             <td>${tableItem.code}</td>
             <td>${tableItem.tax}</td>
@@ -41,7 +46,7 @@ const updateTable = async () => {
         tbodyContent.appendChild(tr);
 
         document.getElementById(uniqueButtonId).addEventListener("click", () => {
-            updateCard(tableItem.products, tableItem.parseTotal, tableItem.taxValue, tableItem.total);
+            updateCard(tableItem.code);
             openView();
         });
     });
@@ -161,14 +166,17 @@ function closeModal() {
 // };
 
 
-const updateCard = async (total, taxValue, parseTotal) => {
-    let products = await getProducts;
+const updateCard = async (code) => {
+    const orderItem = await getOrderItem
+    const orderSelected = orderItem.filter(i => i.order_code === code)
+    console.log(orderSelected)
     modalBody.innerHTML = "";
-    products.map((i) => {
+
+    orderSelected.map((i) => {
         const productsContent = document.createElement("div");
         productsContent.innerHTML = ` <div class="card">
                 <div class="content">
-                    <h3>${i.name}</h3>
+                    <h3>id: ${i.product_code}</h3>
                     <span>${i.tax} Tax</span>
                 </div>
                 <div class="btn-price-unid">
@@ -181,9 +189,9 @@ const updateCard = async (total, taxValue, parseTotal) => {
             </div>`
         modalBody.appendChild(productsContent)
     })
-    document.getElementById("totalValue").textContent = `Total: $${parseTotal}`;
-    document.getElementById("taxValue").textContent = `Tax: $${taxValue}`;
-    document.getElementById("totalTaxedValue").textContent = `Total sem taxa: $${total}`;
+    // document.getElementById("totalValue").textContent = `Total: $${parseTotal}`;
+    // document.getElementById("taxValue").textContent = `Tax: $${taxValue}`;
+    // document.getElementById("totalTaxedValue").textContent = `Total sem taxa: $${total}`;
 };
 
 function openView() {

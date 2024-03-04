@@ -14,7 +14,7 @@ const setCart = (dbCart) => localStorage.setItem("dbCart", JSON.stringify(dbCart
 const setHistory = (dbHistory) => localStorage.setItem("dbHistory", JSON.stringify(dbHistory));
 
 const getCategories = fetch(url).then((res) => { return res.json(); });
-
+console.log(getCategories)
 const postCategory = () => {
     form.addEventListener("submit", async () => {
         if (isValidFields()) {
