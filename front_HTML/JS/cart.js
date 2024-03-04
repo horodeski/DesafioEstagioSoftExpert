@@ -9,12 +9,15 @@ const contentCart = document.getElementById("contentCart");
 
 const url_products = "http://localhost/routers/products.php"
 const url_orders = "http://localhost/routers/order.php"
+const url_order_item = "http://localhost/routers/order_items.php"
 
 const getCart = () => JSON.parse(localStorage.getItem("dbCart")) || [];
 const setCart = (dbCart) => localStorage.setItem("dbCart", JSON.stringify(dbCart));
 const readCart = () => getCart();
 
 const cart = readCart();
+
+console.log(cart)
 
 const getProducts = fetch(url_products).then((res) => {
     return res.json();
@@ -106,29 +109,60 @@ const createCart = (product) => {
     setCart(cart);
 }
 
-const postHistory = async (history, e) => {
-    e.preventDefault();
+function objectToFormData(obj) {
+    const formData = new FormData();
+
+    Object.entries(obj).forEach(([key, value]) => {
+        formData.append(key, value);
+    });
+
+    return formData;
+}
+
+const postHistory = async (history, order_item) => {
     try {
-        const res = await fetch(url_products, {
+        console.log(history);
+        const res = await fetch(url_orders, {
             method: 'POST',
             body: history,
+        })
+
+        const res2 = await fetch(url_orders, {
+            method: 'POST',
+            body: order_item
         })
     } catch (error) {
         console.log(error.message);
     };
+
 }
 
 
 const cartToHistory = async () => {
-    let history = await getOrders;
-    
-    history.push(Object.assign({
+    const order = {
+        code: Math.random().toString(36).replace(/[^a-z]+/g, ''),
         total: document.getElementById("total").value,
         tax: document.getElementById("taxValue").value,
-    }));
-    postHistory(history);
+    }
+    const teste = objectToFormData(order)
+
+    cart.forEach((i) => {
+        const order_item = {
+            order_code: teste.code,
+            product_code: i.code,
+            amount: i.amount,
+            price: i.price,
+            tax: i.tax,
+        };
+        postHistory(teste, order_item);
+    })
+
+
     deleteCart()
 }
+
+console.log(cart.map(i => i))
+
 const isValidFields = () => document.getElementById("form-carrinho").reportValidity();
 
 
@@ -144,10 +178,11 @@ addToCart = async () => {
     if (selectedProduct) {
 
         const cartItem = {
-            product: selectedProduct.name,
+            code: selectedProduct.code,
+            name: selectedProduct.name,
             tax: document.getElementById("tax").value,
             amount: parseInt(document.getElementById("amount").value),
-            unit: document.getElementById("unit").value,
+            price: document.getElementById("unit").value,
         };
         createCart(cartItem);
         updateCards();
@@ -208,18 +243,18 @@ const updateCards = () => {
     cart.forEach((productItem) => {
         const div = document.createElement("div");
         const taxValueAccount = productItem.amount * productItem.tax;
-        const totalAccount = productItem.amount * productItem.unit;
+        const totalAccount = productItem.amount * productItem.price;
 
         div.innerHTML = `
         <div class="card">
             <div class="content">
-                <h3>${productItem.product}</h3>
+                <h3>${productItem.name}</h3>
                 <span>${productItem.tax} Tax</span>
             </div>
             <div class="btn-price-unid">
                 <div class="unid-price">
                     <span>${productItem.amount} (unds.)</span>
-                    <span>$${productItem.unit}</span>
+                    <span>$${productItem.price}</span>
                 </div>
                 <button onclick="deleteItemCart(${cart.indexOf(productItem)})"><i class='bx bx-trash'></i></button>
             </div>

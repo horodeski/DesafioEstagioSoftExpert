@@ -16,6 +16,7 @@ async function postProducts() {
         event.preventDefault();
         if (isValidFields()) {
             const data = new FormData(form);
+            console.log(form)
             
             try {
                 const res = await fetch(url_products, {
