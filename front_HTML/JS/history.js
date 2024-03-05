@@ -176,7 +176,7 @@ const updateCard = async (code) => {
         const productsContent = document.createElement("div");
         productsContent.innerHTML = ` <div class="card">
                 <div class="content">
-                    <h3>id: ${i.product_code}</h3>
+                    <h3>ID do produto: ${i.product_code}</h3>
                     <span>${i.tax} Tax</span>
                 </div>
                 <div class="btn-price-unid">

@@ -119,7 +119,7 @@ function objectToFormData(obj) {
 }
 
 const postOrder = async (history) => {
-    console.log(history)
+
     try {
         const res = await fetch(url_orders, {
             method: 'POST',
@@ -132,7 +132,6 @@ const postOrder = async (history) => {
 }
 
 const postOrderItem = async (f_item) => {
-    console.log(f_item)
     try {
         const res = await fetch(url_order_item, {
             method: 'POST',
@@ -152,52 +151,51 @@ const cartToHistory = async () => {
     }
 
     const teste = objectToFormData(order)
-    postOrder(teste);
+    await postOrder(teste);
 
-    for (let item of cart){
-        let order_item = {
+    for (item of cart) {
+        const order_item = {
             order_code: order.code,
             product_code: item.code,
             amount: item.amount,
             price: item.price,
             tax: item.tax,
         }
-        console.log(order_item)
         let f_item = objectToFormData(order_item)
-        postOrderItem(f_item);
+        await postOrderItem(f_item);
     }
-    
+
     deleteCart()
 }
-
-
 
 const isValidFields = () => document.getElementById("form-carrinho").reportValidity();
 
 
 addToCart = async () => {
     let products = await getProducts;
-    
-    const selectedProductName = document.getElementById("products-list").value;
-    const selectedProduct = products.find(product => product.code == selectedProductName);
-    
-    console.log(products.find(product => product.code == selectedProductName))
-    
-    
+
+    const selectedProductId = document.getElementById("products-list").value;
+    const selectedProduct = products.find(product => product.code == selectedProductId);
+
     if (selectedProduct) {
-        
-        const cartItem = {
-            code: selectedProduct.code,
-            name: selectedProduct.name,
-            tax: document.getElementById("tax").value,
-            amount: parseInt(document.getElementById("amount").value),
-            price: document.getElementById("unit").value,
-        };
-        createCart(cartItem);
-        updateCards();
+        const amountInCart = parseInt(document.getElementById("amount").value);
+        const availableStock = selectedProduct.amount;
 
+        if (amountInCart <= availableStock) {
+            selectedProduct.amount -= amountInCart;
+            updateProducts(products);
+
+            const cartItem = {
+                code: selectedProduct.code,
+                name: selectedProduct.name,
+                tax: document.getElementById("tax").value,
+                amount: parseInt(document.getElementById("amount").value),
+                price: document.getElementById("unit").value,
+            };
+            createCart(cartItem);
+            updateCards();
+        }
     }
-
 }
 
 function openModal() {

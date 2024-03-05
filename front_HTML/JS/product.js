@@ -192,7 +192,7 @@ const saveProduct = () => {
 
 const updateTable = async () => {
     let products = await getProducts;
-
+    console.log(products)
     tbody.innerHTML = "";
     products.forEach((prod, index) => {
         const tr = document.createElement("tr");
