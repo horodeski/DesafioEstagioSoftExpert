@@ -7,7 +7,7 @@ const select = document.querySelector("select")
 const unitPrice = document.getElementById("tax");
 const contentCart = document.getElementById("contentCart");
 
-const url_products = "http://localhost/routers/products.php"
+const url_products = "http://localhost/routers/products.php?op=GET"
 const url_orders = "http://localhost/routers/order.php"
 const url_order_item = "http://localhost/routers/order_item.php"
 
@@ -142,6 +142,16 @@ const postOrderItem = async (f_item) => {
     };
 }
 
+async function updateStock(data) {
+    try {
+      const response = await fetch(urlUpdate,{
+        method: 'POST',
+        body: data
+    });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 const cartToHistory = async () => {
     const order = {

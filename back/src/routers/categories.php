@@ -5,7 +5,7 @@ function runRequestMethod()
 {
     $method = $_SERVER['REQUEST_METHOD'];
 
-    switch ($method) {
+    switch ($_GET["op"]) {
         case "GET":
             echo getCategories();
             break;
@@ -14,8 +14,11 @@ function runRequestMethod()
             $tax = $_POST["tax"];
             echo postCategory($name, $tax);
             break;
-        case "DELETE":
-            echo deleteCategory();
+        case "PUT":
+            $name = $_POST["name"];
+            $tax = $_POST["tax"];
+            $code = $_POST["code"];
+            echo updateCategories($name, $code, $tax);
             break;
     }
 }

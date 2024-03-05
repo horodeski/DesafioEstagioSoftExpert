@@ -6,7 +6,7 @@ include('../index.php');
 
 function getCategories()
 {
-    $categories = myPDO->query('SELECT * FROM categories');
+    $categories = myPDO->query('SELECT * FROM categories ORDER BY CODE');
     $categories = $categories->fetchALL();
     return json_encode($categories);
 };
@@ -21,4 +21,11 @@ function deleteCategory()
 {
     $deleteCategory = myPDO->prepare("DELETE from categories WHERE code=1");
     $deleteCategory->execute();
+};
+
+
+function updateCategories($name, $code, $tax) {
+    $deleteProduct = myPDO->prepare("UPDATE categories SET name='{$name}' WHERE code={$code};");
+    $deleteProduct->execute();
+    
 };

@@ -3,10 +3,12 @@ select = document.querySelector("select");
 const emplyCart = document.getElementById("alert-cart-emply")
 const form = document.getElementById("form-product");
 
-const url_products = "http://localhost/routers/products.php"
+const url_products_get = "http://localhost/routers/products.php?op=GET"
+const url_products_post = "http://localhost/routers/products.php?op=POST"
+const url_products_put = "http://localhost/routers/products.php?op=PUT"
 const url_categories = "http://localhost/routers/categories.php"
 
-const getProducts = fetch(url_products).then((res) => {
+const getProducts = fetch(url_products_get).then((res) => {
     return res.json();
 })
 const getCategories = fetch(url_categories).then((res) => { return res.json(); });
@@ -19,7 +21,7 @@ async function postProducts() {
             console.log(form)
             
             try {
-                const res = await fetch(url_products, {
+                const res = await fetch(url_products_post, {
                     method: 'POST',
                     body: data,
                 });
@@ -30,6 +32,17 @@ async function postProducts() {
         }
     })
 }
+
+async function updateProduct(data) {
+    try {
+      const response = await fetch(urlUpdate,{
+        method: 'POST',
+        body: JSON.stringify(data)
+    });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 async function selectCategories() {
     let categories = await getCategories
