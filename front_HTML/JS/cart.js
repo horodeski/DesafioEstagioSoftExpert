@@ -8,6 +8,7 @@ const unitPrice = document.getElementById("tax");
 const contentCart = document.getElementById("contentCart");
 
 const url_products = "http://localhost/routers/products.php?op=GET"
+const url_products_put = "http://localhost/routers/products.php?op=PUT"
 const url_orders = "http://localhost/routers/order.php"
 const url_order_item = "http://localhost/routers/order_item.php"
 
@@ -38,6 +39,39 @@ async function productsOption() {
 }
 
 productsOption()
+
+async function updateStock(newStock, product) {
+    const data = {
+        code: product,
+        amount: newStock,
+    }
+
+    const f_data = objectToFormData(data)
+    try {
+        const res = await fetch(url_products_put, {
+            method: 'POST',
+            body: f_data
+        });
+        const resData = await res.json();
+        console.log(resData);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function reduceStock(cartItem) {
+    const amount = document.getElementById("amount").value
+    const products = await getProducts
+    selectedProd = products.find(item => item.code == cartItem.code)
+    console.log(selectedProd.code)
+    if (amount <= selectedProd.amount) {
+        const newStock = parseInt(selectedProd.amount) - amount
+        updateStock(newStock, selectedProd.code)
+    }
+    else {
+        alert('ERRO')
+    }
+}
 
 async function allProductsSection() {
     const allProductsDiv = document.getElementById("all-products");
@@ -142,17 +176,6 @@ const postOrderItem = async (f_item) => {
     };
 }
 
-async function updateStock(data) {
-    try {
-      const response = await fetch(urlUpdate,{
-        method: 'POST',
-        body: data
-    });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
 const cartToHistory = async () => {
     const order = {
         code: Math.random().toString(16).slice(2),
@@ -188,23 +211,19 @@ addToCart = async () => {
     const selectedProduct = products.find(product => product.code == selectedProductId);
 
     if (selectedProduct) {
-        const amountInCart = parseInt(document.getElementById("amount").value);
-        const availableStock = selectedProduct.amount;
 
-        if (amountInCart <= availableStock) {
-            selectedProduct.amount -= amountInCart;
-            updateProducts(products);
 
-            const cartItem = {
-                code: selectedProduct.code,
-                name: selectedProduct.name,
-                tax: document.getElementById("tax").value,
-                amount: parseInt(document.getElementById("amount").value),
-                price: document.getElementById("unit").value,
-            };
-            createCart(cartItem);
-            updateCards();
-        }
+        const cartItem = {
+            code: selectedProduct.code,
+            name: selectedProduct.name,
+            tax: document.getElementById("tax").value,
+            amount: parseInt(document.getElementById("amount").value),
+            price: document.getElementById("unit").value,
+        };
+        reduceStock(cartItem)
+        createCart(cartItem);
+        updateCards();
+
     }
 }
 

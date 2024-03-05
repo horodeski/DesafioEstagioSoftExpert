@@ -38,8 +38,6 @@ async function reduceStock() {
     else {
         alert('ERRO')
     }
-
-
 }
 
 function objectToFormData(obj) {
