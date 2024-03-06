@@ -1,44 +1,30 @@
 const cartModal = document.getElementById("cartModal");
-const cartSection = document.getElementsByClassName("carrinho");
 const emplyCart = document.getElementById("alert-cart-emply")
-const table = document.getElementById("table");
 const modalConfirm = document.getElementById("modalConfirm");
 const select = document.querySelector("select")
 const unitPrice = document.getElementById("tax");
 const contentCart = document.getElementById("contentCart");
+const productsAllInput = document.getElementById("products-list");
+productsAllInput.addEventListener("change", updateProductFields);
 
-const url_products = "http://localhost/routers/products.php?op=GET"
+const url_products_get = "http://localhost/routers/products.php?op=GET"
 const url_products_put = "http://localhost/routers/products.php?op=PUT"
 const url_orders = "http://localhost/routers/order.php"
 const url_order_item = "http://localhost/routers/order_item.php"
 
 const getCart = () => JSON.parse(localStorage.getItem("dbCart")) || [];
 const setCart = (dbCart) => localStorage.setItem("dbCart", JSON.stringify(dbCart));
-const readCart = () => getCart();
 
+const readCart = () => getCart();
 const cart = readCart();
 
-
-const getProducts = fetch(url_products).then((res) => {
+const getProducts = fetch(url_products_get).then((res) => {
     return res.json();
 })
-
 const getOrders = fetch(url_orders).then((res) => {
     return res.json();
 })
 
-async function productsOption() {
-    let products = await getProducts;
-
-    for (const product of products) {
-        const option = document.createElement('option');
-        option.textContent = product.name;
-        option.value = product.code;
-        select.appendChild(option);
-    }
-}
-
-productsOption()
 
 async function updateStock(newStock, product) {
     const data = {
@@ -52,25 +38,43 @@ async function updateStock(newStock, product) {
             method: 'POST',
             body: f_data
         });
-        const resData = await res.json();
-        console.log(resData);
     } catch (error) {
         console.log(error);
     }
 }
 
+const postOrder = async (history) => {
+    try {
+        const res = await fetch(url_orders, {
+            method: 'POST',
+            body: history,
+        })
+
+    } catch (error) {
+        console.log(error.message);
+    };
+}
+
+const postOrderItem = async (orderItem) => {
+    try {
+        const res = await fetch(url_order_item, {
+            method: 'POST',
+            body: orderItem,
+        })
+    } catch (error) {
+        console.log(error.message);
+    };
+}
+
+
+
 async function reduceStock(cartItem) {
     const amount = document.getElementById("amount").value
     const products = await getProducts
     selectedProd = products.find(item => item.code == cartItem.code)
-    console.log(selectedProd.code)
-    if (amount <= selectedProd.amount) {
-        const newStock = parseInt(selectedProd.amount) - amount
-        updateStock(newStock, selectedProd.code)
-    }
-    else {
-        alert('ERRO')
-    }
+    console.log(selectedProd)
+    const newStock = parseInt(selectedProd.amount) - amount
+    updateStock(newStock, selectedProd.code)
 }
 
 async function allProductsSection() {
@@ -120,8 +124,18 @@ async function allProductsSection() {
 }
 allProductsSection()
 
-const productsAllInput = document.getElementById("products-list");
-productsAllInput.addEventListener("change", updateProductFields);
+async function productsOption() {
+    let products = await getProducts;
+
+    for (const product of products) {
+        const option = document.createElement('option');
+        option.textContent = product.name;
+        option.value = product.code;
+        select.appendChild(option);
+    }
+}
+productsOption()
+
 
 async function updateProductFields() {
     let products = await getProducts;
@@ -152,29 +166,6 @@ function objectToFormData(obj) {
     return formData;
 }
 
-const postOrder = async (history) => {
-
-    try {
-        const res = await fetch(url_orders, {
-            method: 'POST',
-            body: history,
-        })
-
-    } catch (error) {
-        console.log(error.message);
-    };
-}
-
-const postOrderItem = async (f_item) => {
-    try {
-        const res = await fetch(url_order_item, {
-            method: 'POST',
-            body: f_item,
-        })
-    } catch (error) {
-        console.log(error.message);
-    };
-}
 
 const cartToHistory = async () => {
     const order = {
@@ -183,8 +174,8 @@ const cartToHistory = async () => {
         tax: document.getElementById("taxValue").value,
     }
 
-    const teste = objectToFormData(order)
-    await postOrder(teste);
+    const orderFormData = objectToFormData(order)
+    await postOrder(orderFormData);
 
     for (item of cart) {
         const order_item = {
@@ -194,8 +185,8 @@ const cartToHistory = async () => {
             price: item.price,
             tax: item.tax,
         }
-        let f_item = objectToFormData(order_item)
-        await postOrderItem(f_item);
+        let orderItemFormData = objectToFormData(order_item)
+        await postOrderItem(orderItemFormData);
     }
 
     deleteCart()
@@ -203,16 +194,15 @@ const cartToHistory = async () => {
 
 const isValidFields = () => document.getElementById("form-carrinho").reportValidity();
 
-
-addToCart = async () => {
+const addToCart = async () => {
     let products = await getProducts;
+    const amount = document.getElementById("amount").value
+
 
     const selectedProductId = document.getElementById("products-list").value;
     const selectedProduct = products.find(product => product.code == selectedProductId);
 
-    if (selectedProduct) {
-
-
+    if (selectedProduct && amount <= selectedProduct.amount) {
         const cartItem = {
             code: selectedProduct.code,
             name: selectedProduct.name,
@@ -223,7 +213,11 @@ addToCart = async () => {
         reduceStock(cartItem)
         createCart(cartItem);
         updateCards();
-
+        window.location.reload();
+    } else if (selectedProduct.amount > 0) {
+        alert(`Quantidade indisponivel! Este produto tem apenas ${selectedProduct.amount} unidades `)
+    } else if (selectedProduct.amount == 0) {
+        alert(`Este produto não está mais disponivel em nosso sistema`)
     }
 }
 
@@ -253,13 +247,6 @@ const deleteCart = (index) => {
     cart.splice(index);
     setCart(cart);
     window.location.reload();
-}
-
-const calculateTaxedUnit = (taxPercentage, originalUnit) => {
-    const tax = parseFloat(taxPercentage) / 100;
-    const originalUnitValue = parseFloat(originalUnit);
-    const taxedUnit = originalUnitValue + (originalUnitValue * tax);
-    return taxedUnit.toFixed(2);
 }
 
 const verifyEmptyCart = () => {
@@ -347,7 +334,6 @@ const cancelCart = (event) => {
     }, 1000);
 
 };
-
 
 document.addEventListener("DOMContentLoaded", function () {
     verifyEmptyCart();
