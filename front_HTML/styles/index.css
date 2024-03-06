@@ -18,6 +18,9 @@
     align-items: center;
 }
 
+.history nav button, .categories nav button, .products nav button {
+    opacity: 0;
+}
 
 .carrinho {
     background-color: #fff;

@@ -11,15 +11,15 @@ const modalConfirm = document.getElementById("modalConfirm");
 const contentCart = document.getElementById("contentCart");
 const form = document.getElementById("form-category");
 
+const getCart = () => JSON.parse(localStorage.getItem("dbCart")) || [];
 const setCart = (dbCart) => localStorage.setItem("dbCart", JSON.stringify(dbCart));
 
-const getCart = () => JSON.parse(localStorage.getItem("dbCart")) || [];
 const readCart = () => getCart();
+const cart = readCart();
 
 const getCategories = fetch(url_categories_get).then((res) => { return res.json(); });
 const getProducts = fetch(url_products_get).then((res) => { return res.json(); });
 
-const cart = readCart();
 
 const postCategory = () => {
     form.addEventListener("submit", async () => {
@@ -68,13 +68,13 @@ function closeCart() {
 const deleteItemCart = (index) => {
     cart.splice(index, 1);
     setCart(cart);
-    // window.location.reload();
+    window.location.reload();
 }
 
 const deleteCart = (index) => {
     cart.splice(index);
     setCart(cart);
-    // window.location.reload();
+    window.location.reload();
 }
 
 const calculateTaxedUnit = (taxPercentage, originalUnit) => {
@@ -182,23 +182,23 @@ const updateCards = () => {
     cart.forEach((productItem) => {
         const div = document.createElement("div");
         const taxValueAccount = productItem.amount * productItem.tax;
-        const totalAccount = productItem.amount * productItem.unit;
+        const totalAccount = productItem.amount * productItem.price;
 
         div.innerHTML = `
         <div class="card">
-        <div class="content">
-        <h3>${productItem.product}</h3>
-        <span>${productItem.tax} Tax</span>
+            <div class="content">
+                <h3>${productItem.name}</h3>
+                <span>${productItem.tax} Tax</span>
+            </div>
+            <div class="btn-price-unid">
+                <div class="unid-price">
+                    <span>${productItem.amount} (unds.)</span>
+                    <span>$${productItem.price}</span>
+                </div>
+                <button onclick="deleteItemCart(${cart.indexOf(productItem)})"><i class='bx bx-trash'></i></button>
+            </div>
         </div>
-        <div class="btn-price-unid">
-        <div class="unid-price">
-        <span>${productItem.amount} (unds.)</span>
-        <span>$${productItem.unit}</span>
-        </div>
-        <button onclick="deleteItemCart(${cart.indexOf(productItem)})"><i class='bx bx-trash'></i></button>
-        </div>
-        </div>
-        `;
+    `;
         contentCart.appendChild(div);
         parseTotal += totalAccount;
         taxValue += taxValueAccount;

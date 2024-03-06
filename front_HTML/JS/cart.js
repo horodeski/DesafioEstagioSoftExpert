@@ -201,23 +201,24 @@ const addToCart = async () => {
 
     const selectedProductId = document.getElementById("products-list").value;
     const selectedProduct = products.find(product => product.code == selectedProductId);
-
-    if (selectedProduct && amount <= selectedProduct.amount) {
-        const cartItem = {
-            code: selectedProduct.code,
-            name: selectedProduct.name,
-            tax: document.getElementById("tax").value,
-            amount: parseInt(document.getElementById("amount").value),
-            price: document.getElementById("unit").value,
-        };
-        reduceStock(cartItem)
-        createCart(cartItem);
-        updateCards();
-        window.location.reload();
-    } else if (selectedProduct.amount > 0) {
-        alert(`Quantidade indisponivel! Este produto tem apenas ${selectedProduct.amount} unidades `)
-    } else if (selectedProduct.amount == 0) {
-        alert(`Este produto não está mais disponivel em nosso sistema`)
+    if (isValidFields()) {
+        if (selectedProduct && amount <= selectedProduct.amount) {
+            const cartItem = {
+                code: selectedProduct.code,
+                name: selectedProduct.name,
+                tax: document.getElementById("tax").value,
+                amount: parseInt(document.getElementById("amount").value),
+                price: document.getElementById("unit").value,
+            };
+            reduceStock(cartItem)
+            createCart(cartItem);
+            updateCards();
+            window.location.reload();
+        } else if (selectedProduct.amount > 0) {
+            alert(`Quantidade indisponivel! Este produto tem apenas ${selectedProduct.amount} unidades `)
+        } else if (selectedProduct.amount == 0) {
+            alert(`Este produto não está mais disponivel em nosso sistema`)
+        }
     }
 }
 
