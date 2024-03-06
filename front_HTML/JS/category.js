@@ -1,4 +1,8 @@
-const url = "http://localhost/routers/categories.php"
+const url_products_get = "http://localhost/routers/products.php?op=GET"
+const url_categories_get = "http://localhost/routers/categories.php?op=GET"
+const url_categories_post = "http://localhost/routers/categories.php?op=POST"
+const url_categories_put = "http://localhost/routers/categories.php?op=PUT"
+const url_categories_delete = "http://localhost/routers/categories.php?op=DELETE"
 
 const tbody = document.querySelector("tbody");
 const cartModal = document.getElementById("cartModal");
@@ -7,20 +11,22 @@ const modalConfirm = document.getElementById("modalConfirm");
 const contentCart = document.getElementById("contentCart");
 const form = document.getElementById("form-category");
 
-const getCart = () => JSON.parse(localStorage.getItem("dbCart")) || [];
-const getHistory = () => JSON.parse(localStorage.getItem("dbHistory")) || [];
-
 const setCart = (dbCart) => localStorage.setItem("dbCart", JSON.stringify(dbCart));
-const setHistory = (dbHistory) => localStorage.setItem("dbHistory", JSON.stringify(dbHistory));
 
-const getCategories = fetch(url).then((res) => { return res.json(); });
-console.log(getCategories)
+const getCart = () => JSON.parse(localStorage.getItem("dbCart")) || [];
+const readCart = () => getCart();
+
+const getCategories = fetch(url_categories_get).then((res) => { return res.json(); });
+const getProducts = fetch(url_products_get).then((res) => { return res.json(); });
+
+const cart = readCart();
+
 const postCategory = () => {
     form.addEventListener("submit", async () => {
         if (isValidFields()) {
             const data = new FormData(form);
             try {
-                const res = await fetch(url, {
+                const res = await fetch(url_categories_post, {
                     method: 'POST',
                     body: data
                 });
@@ -31,10 +37,6 @@ const postCategory = () => {
     })
 }
 
-
-const readCart = () => getCart();
-
-const cart = readCart();
 
 const isValidFields = () => {
     const form = document.getElementById("form-category")
@@ -90,7 +92,6 @@ const verifyEmptyCart = () => {
 };
 
 const cartToHistory = () => {
-
     history.push(Object.assign({
         id: Math.random().toString(16).slice(2),
         parseTotal: document.getElementById("parseTotal").value,
@@ -98,6 +99,7 @@ const cartToHistory = () => {
         taxValue: document.getElementById("taxValue").value,
         products: cart
     }));
+
     setHistory(history);
     deleteCart()
 }
@@ -105,25 +107,69 @@ const cartToHistory = () => {
 async function updateTable() {
     let categories = await getCategories
 
-    tbody.innerHTML = "";
-    categories.forEach((category, index) => {
+    categories.forEach((category) => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
         <td>${category.code}</td>
         <td>${category.name}</td>
         <td>${category.tax}%</td>
-        <td><button class="buttonDelete" onclick="deleteCategory(${index})"><i class='bx bxs-trash-alt' ></i></button></td>
+        <td><button class="buttonDelete" onclick="deleteCategory(${category.code})"><i class='bx bxs-trash-alt' ></i></button></td>
         `;
+
         tbody.appendChild(tr);
     });
 };
 
-const deleteCategory = (index) => {
-    const confirm = window.confirm("Are you sure you want to delete?");
-    if (confirm) {
-        categories.splice(index, 1);
-        setCategories(categories);
+function objectToFormData(obj) {
+    const formData = new FormData();
+
+    Object.entries(obj).forEach(([key, value]) => {
+        formData.append(key, value);
+    });
+
+    return formData;
+}
+
+
+const deleteCategory = async (code) => {
+    const products = await getProducts;
+    const categories = await getCategories;
+
+    const objCode = {
+        code: code
     }
+
+    const codeFormData = objectToFormData(objCode);
+
+    const findCategory = categories.find(i => i.code == code)
+    const mapCategory = products.map(i => i.category === findCategory.name)
+
+    if (mapCategory.find(i => i == true)) {
+        const confirm = window.confirm("Você tem certeza que quer deletar essa categoria? Os produtos que tem essa categoria serão apagados.");
+        if (confirm) {
+            try {
+                await fetch(url_categories_delete, {
+                    method: "POST",
+                    body: codeFormData
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    } else {
+        const confirm = window.confirm("Você tem certeza que quer deletar essa categoria?");
+        if (confirm) {
+            try {
+                await fetch(url_categories_delete, {
+                    method: "POST",
+                    body: codeFormData
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+    window.location.reload();
 };
 
 const updateCards = () => {

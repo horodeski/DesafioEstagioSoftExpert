@@ -17,14 +17,14 @@ function postCategory($name, $tax)
     $addCategory->execute();
 };
 
-function deleteCategory()
+function deleteCategory($code)
 {
-    $deleteCategory = myPDO->prepare("DELETE from categories WHERE code=1");
+    $deleteCategory = myPDO->prepare("DELETE from categories WHERE code=$code");
     $deleteCategory->execute();
 };
 
 
-function updateCategories($name, $code, $tax) {
+function updateCategories($name, $code) {
     $deleteProduct = myPDO->prepare("UPDATE categories SET name='{$name}' WHERE code={$code};");
     $deleteProduct->execute();
     

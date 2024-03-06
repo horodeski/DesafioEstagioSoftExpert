@@ -20,6 +20,10 @@ function runRequestMethod()
             $code = $_POST["code"];
             echo updateCategories($name, $code, $tax);
             break;
+        case "DELETE":
+            $code = $_POST["code"];
+            echo deleteCategory($code);
+            break;
     }
 }
 
