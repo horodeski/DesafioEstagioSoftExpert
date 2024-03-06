@@ -198,7 +198,6 @@ const addToCart = async () => {
     let products = await getProducts;
     const amount = document.getElementById("amount").value
 
-
     const selectedProductId = document.getElementById("products-list").value;
     const selectedProduct = products.find(product => product.code == selectedProductId);
     if (isValidFields()) {
