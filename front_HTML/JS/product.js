@@ -6,12 +6,13 @@ const form = document.getElementById("form-product");
 const url_products_get = "http://localhost/routers/products.php?op=GET"
 const url_products_post = "http://localhost/routers/products.php?op=POST"
 const url_products_put = "http://localhost/routers/products.php?op=PUT"
-const url_categories = "http://localhost/routers/categories.php"
+const url_products_delete = "http://localhost/routers/products.php?op=DELETE"
+const url_categories_get = "http://localhost/routers/categories.php?op=GET"
 
 const getProducts = fetch(url_products_get).then((res) => {
     return res.json();
 })
-const getCategories = fetch(url_categories).then((res) => { return res.json(); });
+const getCategories = fetch(url_categories_get).then((res) => { return res.json(); });
 
 async function postProducts() {
     form.addEventListener("submit", async event => {
@@ -19,7 +20,7 @@ async function postProducts() {
         if (isValidFields()) {
             const data = new FormData(form);
             console.log(form)
-            
+
             try {
                 const res = await fetch(url_products_post, {
                     method: 'POST',
@@ -33,17 +34,6 @@ async function postProducts() {
     })
 }
 
-async function updateProduct(data) {
-    try {
-      const response = await fetch(urlUpdate,{
-        method: 'POST',
-        body: JSON.stringify(data)
-    });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
 async function selectCategories() {
     let categories = await getCategories
     for (const i of categories) {
@@ -55,6 +45,38 @@ async function selectCategories() {
 }
 
 selectCategories()
+
+
+function objectToFormData(obj) {
+    const formData = new FormData();
+
+    Object.entries(obj).forEach(([key, value]) => {
+        formData.append(key, value);
+    });
+
+    return formData;
+}
+
+
+const deleteProduct = async (code) => {
+    const objCode = {
+        code: code
+    }
+    const codeFormData = objectToFormData(objCode);
+
+    const confirm = window.confirm("Você tem certeza que quer deletar essa categoria?");
+    if (confirm) {
+        try {
+            await fetch(url_products_delete, {
+                method: "POST",
+                body: codeFormData
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    window.location.reload();
+};
 
 
 const isValidFields = () => {
@@ -216,7 +238,7 @@ const updateTable = async () => {
         <td>${prod.price}</td>
         <td>${prod.category}</td>
         <td>$${prod.tax}</td>
-        <td><button class="buttonDelete" onclick="deleteProduct(${index})"><i class='bx bxs-trash-alt' ></i></button></td>
+        <td><button class="buttonDelete" onclick="deleteProduct(${prod.code})"><i class='bx bxs-trash-alt' ></i></button></td>
         `;
         tbody.appendChild(tr);
     });
@@ -226,15 +248,6 @@ const updateProduct = (index, newProduct) => {
     products[index] = newProduct;
     setProducts(products);
     updateTable();
-}
-
-const deleteProduct = (index) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete?");
-    if (confirmDelete) {
-        products.splice(index, 1);
-        setProducts(products);
-        updateTable();
-    }
 }
 
 updateTable();

@@ -26,6 +26,10 @@ function runRequestMethod()
             echo $_POST["amount"];
             echo updateAmountProduct($amount, $code);
             break;
+        case "DELETE":
+            $code = $_POST["code"];
+            echo deleteProduct($code);
+            break;
     }
 }
 
