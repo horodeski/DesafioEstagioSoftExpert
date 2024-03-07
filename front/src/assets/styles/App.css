@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --c-gray-900: #000000;
+  --c-gray-800: #1f1f1f;
+  --c-gray-700: #2e2e2e;
+  --c-gray-600: #313131;
+  --c-gray-500: #969593;
+  --c-gray-400: #a6a6a6;
+  --c-gray-300: #bdbbb7;
+  --c-gray-200: #f1f1f1;
+  --c-gray-100: #ffffff;
+  --c-green-500: #4cd372;
+  --c-green-600: #33c55d;
+  --c-blue-500: #3491d8;
+  --c-blue-600: #277fc2;
+  --c-text-primary: var(--c-gray-100);
+  --c-text-secondary: var(--c-gray-200);
+  --c-text-tertiary: var(--c-gray-500);
+}
+
+body {
+  line-height: 1.5;
+  font-family: "Be Vietnam Pro", sans-serif;
+  background-color: var(--c-gray-800);
+  color: var(--c-text-primary);
+  padding: 2vw;
+
+}
+
+a {
+  color: var(--c-gray-300);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--c-gray-100);
+}
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  transition: .05s all ease-in-out;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+
+input {
+  background-color: transparent;
+  border: 1px solid var(--c-gray-700);
+  border-radius: 5px;
+  padding: .5vw;
+  width: 100%;
+  color: white
+
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--c-blue-500);
+  box-shadow: 0 0 0 1px var(--c-blue-500), 0 0 0 4px #88b8dd4d;
+
+}
+
+input:focus-visible {
+  outline: 0;
+}
+
+
+main {
+  display: flex;
+}
+
+.content {
+  min-width: 83vw;
+  padding-left: 2vw;
+}
+
+
+
+button {
+  border-radius: 6px;
+  padding: 0.5em 0.8em;
+  border: 0;
+  display: flex;
+  color: var(--c-text-secondary);
+  transition: 0.25s ease;
+  cursor: pointer;
+  align-items: center;
+  background-color: var(--c-gray-700);
+}
+
+button:hover,
+button:focus {
+  background-color: var(--c-gray-600);
+}
+
+.btn-green {
+  background-color: var(--c-green-500);
+  color: var(--c-text-secondary);
+
+}
+
+.btn-green:hover,
+.btn-green:focus {
+  background-color: var(--c-green-600);
+}
+
+.btn-blue {
+  background-color: var(--c-blue-500);
+}
+
+.btn-blue:hover,
+.btn-blue:focus {
+  background-color: var(--c-blue-600);
+}
+
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--c-blue-500);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-blue-500);
+}

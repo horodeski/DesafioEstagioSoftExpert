@@ -1,0 +1,46 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+}
+
+
+.options {
+    display: flex;
+    flex-direction: column;
+}
+
+.moreOptions {
+    display: flex;
+    margin-left: 1vw;
+    flex-direction: column;
+}
+
+.moreOptions a {
+    cursor: pointer;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+
+.sidebar ul li:hover div {
+    cursor: pointer;
+    transition: .5s all ease-in-out;
+    margin-left: .5vw;
+}
+
+.sidebar ul li:hover * {
+    color: var(--c-gray-100) !important;
+}
+
+.sidebar ul li div {
+    display: flex;
+    align-items: center;
+    gap: .5vw;
+}
+
+.sidebar ul li i {
+    color: var(--c-gray-300)
+}

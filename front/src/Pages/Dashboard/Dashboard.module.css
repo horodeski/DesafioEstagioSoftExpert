@@ -1,0 +1,13 @@
+.allSections {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+}
+
+.container {
+    display: flex;
+}
+
+.moreInfo {
+    padding: 1vw;
+}
