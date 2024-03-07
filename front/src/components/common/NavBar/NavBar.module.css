@@ -1,0 +1,22 @@
+.logoSection h1 {
+    font-size: 2em;
+    font-weight: 600;
+}
+
+.navBar {
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    margin-bottom: 2vh;
+}
+
+.user img {
+    width: 2.5vw;
+    border-radius: 50%;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+}

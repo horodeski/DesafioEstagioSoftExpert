@@ -1,0 +1,33 @@
+
+.titlePrice {
+    display: flex;
+    justify-content: space-between;
+}
+
+.titlePrice span:nth-child(1) {
+    font-weight: 600;
+    font-size: 1.4em;
+}
+
+.titlePrice span:nth-child(2) {
+    color: var(--c-blue-500);
+    font-weight: 600;
+}
+
+.productCard {
+    padding: 1vw;
+    background-color: var(--c-gray-700);
+    width: 22%;
+    border-radius: 10px;
+    margin-bottom: 1vh;
+}
+
+.amount {
+    display: flex;
+    gap: .3vw;
+    margin: 1vh 0;
+}
+
+.amount button {
+    background-color: var(--c-gray-600);
+}
