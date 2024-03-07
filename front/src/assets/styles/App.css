@@ -78,7 +78,7 @@ main {
 }
 
 .content {
-  min-width: 83vw;
+  width: 100%;
   padding-left: 2vw;
 }
 
