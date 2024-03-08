@@ -25,22 +25,30 @@
 }
 
 
-.sidebar ul li:hover div {
+.liStyle:hover  {
     cursor: pointer;
-    transition: .5s all ease-in-out;
+    transition: .3s all ease-in-out;
     margin-left: .5vw;
 }
 
-.sidebar ul li:hover * {
+.liStyle:hover * {
     color: var(--c-gray-100) !important;
 }
 
-.sidebar ul li div {
+.liStyle a, .liStyle {
     display: flex;
     align-items: center;
     gap: .5vw;
 }
 
-.sidebar ul li i {
+.liStyle i {
     color: var(--c-gray-300)
+}
+
+
+
+.dropdown {
+    margin-left: 1.4vw;
+    display: flex;
+    flex-direction: column;
 }

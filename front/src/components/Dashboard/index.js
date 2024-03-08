@@ -5,6 +5,6 @@ import LatestProducts from "./Products/LatestProducts";
 import LatestCategories from "./Categories/LatestCategories";
 import LessTax from "./Categories/LessTax";
 import MoreTax from "./Categories/MoreTax";
-import Icon from "../common/Icon"
+import Icon from "../Common/Icon"
 
 export {NavBar, Card, LackingProducts, LatestProducts, MoreTax, LessTax, LatestCategories, Icon}

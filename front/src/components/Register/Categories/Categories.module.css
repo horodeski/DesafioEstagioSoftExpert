@@ -1,0 +1,83 @@
+.contentTable thead tr th{
+    font-weight: 400;
+    color: var(--c-gray-400);
+    text-align: left;
+}
+
+.contentTable tbody tr td {
+    padding: 1vh 0;
+}
+
+.contentTable tbody tr td:last-child {
+    width: 4vw;
+}
+
+.contentTable table {
+    width: 100%;
+    margin-top: 2vh;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: .5vw;
+}
+
+.search {
+    display: flex;
+    gap: 1vw;
+}
+
+.search button span{
+    width: max-content !important;
+}
+
+.allButtons {
+    display: flex;
+    gap: .5vw;
+
+}
+
+
+
+
+
+
+
+.modal .header {
+    display: flex;
+    margin-bottom: 2vh;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal {
+    width: 30vw;
+    padding: 1vw;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #1a1a1a;
+    border: 1px solid var(--c-gray-600);
+}
+
+
+.modal input {
+    width: -webkit-fill-available !important;
+}
+
+
+.modal .group  {
+    display: flex;
+    flex-direction: column;
+    gap: .7vh;
+    margin-bottom: 1vh;
+}
+.modal .group span {
+    font-size: .8em;
+    color: var(--c-gray-400);
+}
+
+.modal form button {
+    margin-top: 3vh;
+}

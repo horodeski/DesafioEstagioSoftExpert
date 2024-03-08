@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Card from './CardProduct'
 import styles from "../Dashboard.module.css"
-import { Icon } from '../../common'
+import { Icon } from '../../Common'
 
 function Modal({ closeModal }) {
   const [active, setActive] = useState("products")

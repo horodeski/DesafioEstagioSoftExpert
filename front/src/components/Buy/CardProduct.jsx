@@ -1,4 +1,5 @@
 import React from 'react'
+import Icon from "../Common/Icon"
 import styles from "./Buy.module.css"
 
 function CardProduct() {
@@ -10,14 +11,21 @@ function CardProduct() {
             </div>
             <span>Toys</span>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim quam consectetur vitae officia reiciendis voluptatesi...</p>
-            <div className={styles.amount}>
-                <button>-</button>
-                <span>2</span>
-                <button>+</button>
+            <div className={styles.right}>
+                <div className={styles.amount}>
+                    <button>-</button>
+                    <span>2</span>
+                    <button>+</button>
+                </div>
+                <div className={styles.allButtons}>
+                    <button className='btn-blue'>
+                        Adicionar ao carrinho
+                    </button>
+                    <button className='btn-green'>
+                        <Icon iconPath="ph ph-heart" />
+                    </button>
+                </div>
             </div>
-            <button className='btn-blue'>
-                Adicionar ao carrinho
-            </button>
         </div>
     )
 }

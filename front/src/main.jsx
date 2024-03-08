@@ -3,9 +3,6 @@ import { RouterProvider } from "react-router-dom";
 import ReactDOM from 'react-dom/client'
 import routes from './helpers/Routes/Routes';
 
-
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={routes} />

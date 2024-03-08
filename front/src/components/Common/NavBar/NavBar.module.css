@@ -20,3 +20,14 @@
     align-items: center;
     gap: 1vw;
 }
+
+.right {
+    display: flex;
+    align-items: center;
+}
+
+.right .buttons {
+    display: flex;
+    gap: .5vw;
+    margin-right: 1vw;
+}

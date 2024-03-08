@@ -10,24 +10,27 @@ const optionsSideBar = [
         icon: "ph ph-shopping-bag"
     },
     {
-        name: "Relatórios",
-        icon: "ph ph-table",
-        options: [
-            {
-                name: "Produtos",
-                path: "produtos",
-            },
-            {
-                name: "Categories",
-                path: "compras",
-            }
-        ]
-    },
-    {
         name: "Histórico",
         path: "historico",
         icon: "ph ph-books"
     }
 ]
 
-export default optionsSideBar
+const dropdownOptions = [
+    {
+        name: "Cadastros",
+        icon: "ph ph-table",
+        options: [
+            {
+                name: "Produtos",
+                path: "register/products",
+            },
+            {
+                name: "Categories",
+                path: "register/categories",
+            }
+        ]
+    },
+]
+
+export {optionsSideBar, dropdownOptions}

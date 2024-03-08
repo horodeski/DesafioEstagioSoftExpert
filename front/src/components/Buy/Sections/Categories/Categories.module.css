@@ -1,0 +1,17 @@
+.allCategories {
+    display: flex;
+    gap: 1vw;
+    padding: 1vh 0;
+}
+
+.allCategories .categoryCard {
+    padding: 1vh 1vw;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: var(--c-gray-700);
+}
+
+
+.allCategories .categoryCard:hover {
+    outline: 2px solid var(--c-blue-500);
+}

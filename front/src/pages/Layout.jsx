@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavBar, SideBar } from '../components/common';
+import { NavBar, SideBar } from '../components/Common';
 import '../assets/styles/App.css'
 import { Outlet } from 'react-router-dom';
 

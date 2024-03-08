@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Card } from '..'
-import { Icon } from "../../common"
+import { Icon } from "../../Common"
 import "../../../assets/styles/App.css"
 import styles from "../Dashboard.module.css"
 import Modal from './Modal'

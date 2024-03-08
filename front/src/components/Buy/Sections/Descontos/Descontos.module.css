@@ -1,0 +1,13 @@
+.allProducts {
+    margin-top: 1vh;
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.search {
+    width: 100%;
+    display: flex;
+    gap: .5vw;
+    margin-bottom: 1vh;
+}

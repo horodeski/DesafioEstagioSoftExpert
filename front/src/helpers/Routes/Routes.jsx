@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Categories, Comprar, Dashboard, Layout, NoPage } from "../../Pages";
+import { Categories, Comprar, Dashboard, Layout, NoPage, ProductsRegister, CategoriesRegister } from "../../pages";
 
 const routes = createBrowserRouter([
     {
@@ -18,6 +18,14 @@ const routes = createBrowserRouter([
             {
                 path: "comprar",
                 element: <Comprar />
+            },
+            {
+                path: "register/products",
+                element: <ProductsRegister />
+            },
+            {
+                path: "register/categories",
+                element: <CategoriesRegister />
             },
         ]
     }

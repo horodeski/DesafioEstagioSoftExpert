@@ -1,3 +1,3 @@
-import optionsSideBar from "./Sidebar"
+import {optionsSideBar, dropdownOptions} from "./Sidebar"
 
-export { optionsSideBar }
+export { optionsSideBar, dropdownOptions }
