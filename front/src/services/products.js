@@ -2,7 +2,7 @@ import api from '../plugins/api'
 
 class ProductsApi {
   async getProducts() {
-    const response = await api.get('/products.php?op=GET')
+    const response = await api.get('/products')
     return response.data
   }
   async postProducts(product) {

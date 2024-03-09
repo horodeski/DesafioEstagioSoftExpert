@@ -1,6 +1,11 @@
-import uiTypes from "./types";
+import {uiTypes} from "./types";
 
-export const setModal = (payload) => ({
-    type: uiTypes.OPEN_MODAL,
+export const setModalRegister = (payload) => ({
+    type: uiTypes.SET_MODAL_REGISTER,
+    payload
+});
+
+export const setModalCart = (payload) => ({
+    type: uiTypes.SET_MODAL_CART,
     payload
 });

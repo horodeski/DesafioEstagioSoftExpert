@@ -1,11 +1,12 @@
 import React from 'react'
-import styles from "./Categories.module.css"
-import { Icon } from '../../Common'
-import categories from '../../../services/categories'
 import LineTable from './LineTable'
 import ModalCategory from './ModalCategory'
+import styles from "./Categories.module.css"
+import { useSelector } from 'react-redux'
 
 function Table({ categories, categoriesData, productsData }) {
+    const {isOpenModalRegister} = useSelector(state => state.uiReducer)
+    
     return (
         <div className={styles.contentTable}>
             <table>
@@ -26,7 +27,10 @@ function Table({ categories, categoriesData, productsData }) {
                     }
                 </tbody>
             </table>
-            <ModalCategory />
+            {
+                isOpenModalRegister &&
+                <ModalCategory />
+            }
         </div>
     )
 }

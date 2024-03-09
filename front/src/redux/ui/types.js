@@ -1,5 +1,6 @@
 const uiTypes = {
-    SET_MODAL: "SET_MODAL"
+    SET_MODAL_REGISTER: "SET_MODAL_REGISTER",
+    SET_MODAL_CART: "SET_MODAL_CART"
 }
 
-export default uiTypes
+export  {uiTypes}

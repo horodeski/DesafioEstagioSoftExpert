@@ -1,12 +1,7 @@
 const optionsSideBar = [
     {
-        name: "Dashboard",
-        path: "dashboard",
-        icon: "ph ph-chart-pie-slice"
-    },
-    {
         name: "Comprar",
-        path: "comprar",
+        path: "",
         icon: "ph ph-shopping-bag"
     },
     {

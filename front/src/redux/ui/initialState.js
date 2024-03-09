@@ -1,5 +1,4 @@
-const uiState = {
-    isOpenModal: false
+export const uiState = {
+    isOpenModalRegister: false,
+    isOpenModalCart: false
 }
-
-export default uiState
