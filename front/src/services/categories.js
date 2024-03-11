@@ -7,15 +7,15 @@ class CategoriesApi {
   }
   async postCategory(category) {
     let response
-    if (category.id) {
-      response = await api.put(`/categories/${category.id}/`, category)
+    if (category.code) {
+      response = await api.put(`/categories.php?op=POST`, category)
     } else {
-      response = await api.post('/categories/', category)
+      response = await api.post('/categories.php?op=POST', category)
     }
     return response.data
   }
-  async deleteCategory(category) {
-    const response = await api.delete(`/categories/${category.id}/`)
+  async deleteCategory(code) {
+    const response = await api.post('/categories.php?op=DELETE', code)
     return response.data
   }
 }

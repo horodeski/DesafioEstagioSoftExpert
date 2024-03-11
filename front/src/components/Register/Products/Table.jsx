@@ -1,19 +1,22 @@
 import React from 'react'
 import styles from "./Products.module.css"
-import { Icon } from '../../Common'
 import LineTable from './LineTable'
+import ModalProduct from './ModalProduct'
+import { useSelector } from 'react-redux'
 
 function Table({ products }) {
+    const { isOpenModalRegister } = useSelector(state => state.uiReducer)
+    console.log(isOpenModalRegister)
     return (
         <div className={styles.contentTable}>
             <table>
                 <thead>
                     <tr>
-                        {/* <th>Code</th> */}
+                        <th>Code</th>
                         <th>Name</th>
-                        {/* <th>Quantidade</th> */}
+                        <th>Quantidade</th>
                         <th>Preço</th>
-                        {/* <th>Tax</th> */}
+                        <th>Tax</th>
                         <th>Categoria</th>
                         <th>Ações</th>
                     </tr>
@@ -21,11 +24,17 @@ function Table({ products }) {
                 <tbody>
                     {
                         products.map((product) => (
-                            <LineTable title={product.title} key={product.id}  id={product.id} category={product.category} price={product.price} />
+                            <LineTable name={product.name} key={product.code} code={product.code} category={product.category}
+                                tax={product.tax}
+                                amount={product.amount} price={product.price} />
                         ))
                     }
                 </tbody>
             </table>
+            {
+                isOpenModalRegister &&
+                <ModalProduct />
+            }
         </div>
     )
 }
