@@ -1,4 +1,5 @@
 export const uiState = {
     isOpenModalRegister: false,
-    isOpenModalCart: false
+    isOpenModalCart: false,
+    isOpenModalFavorite: false
 }

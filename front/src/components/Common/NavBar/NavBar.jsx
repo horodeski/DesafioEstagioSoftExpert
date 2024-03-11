@@ -2,7 +2,7 @@ import React from 'react'
 import Icon from "../Icon"
 import styles from "./NavBar.module.css"
 import { useDispatch } from 'react-redux'
-import { setModalCart } from '../../../redux/ui/actions'
+import { setModalCart, setModalFavorite } from '../../../redux/ui/actions'
 import { toast } from 'react-toastify'
 
 export default function NavBar() {
@@ -19,7 +19,7 @@ export default function NavBar() {
           <button onClick={() => dispatch(setModalCart(true))}>
             <Icon iconPath="ph-fill ph-shopping-cart-simple" />
           </button>
-          <button onClick={notify}>
+          <button onClick={() => dispatch(setModalFavorite(true))}>
             <Icon iconPath="ph ph-heart" />
           </button>
         </div>

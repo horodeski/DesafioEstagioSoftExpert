@@ -1,12 +1,12 @@
 import React from 'react'
-import { Cart, NavBar, SideBar } from '../components/Common';
+import { Cart, Favorite, NavBar, SideBar } from '../components/Common';
 import '../assets/styles/App.css'
 import { Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 function Layout() {
-    const { isOpenModalCart } = useSelector(state => state.uiReducer)
+    const { isOpenModalCart, isOpenModalFavorite } = useSelector(state => state.uiReducer)
 
     return (
         <div id='app'>
@@ -20,6 +20,10 @@ function Layout() {
             {
                 isOpenModalCart &&
                 <Cart />
+            }
+            {
+                isOpenModalFavorite && 
+                <Favorite />
             }
             <ToastContainer
                 position="bottom-right"
