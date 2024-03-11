@@ -12,16 +12,16 @@ export default function Products() {
     setAllProducts(data);
     setFilteredProducts(data);
   }
-
   const handleSearchChange = (newValue) => {
     setSearchValue(newValue);
-
+    
     const filtered = allProducts.filter((product) =>
-      product.title.toLowerCase().includes(newValue.toLowerCase())
+    product.name.toLowerCase().includes(newValue.toLowerCase())
     );
-
+    
     setFilteredProducts(filtered);
   };
+  console.log(filteredProducts)
 
   useEffect(() => {
     getProducts();

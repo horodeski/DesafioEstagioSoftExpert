@@ -18,9 +18,9 @@ function DropdownItem({ description, options, icon }) {
                 dropdownState && (
                     <div className={styles.dropdown}>
                         {
-                        options.map((option) => (
-                            <Link key={option} to={option.path}>{option.name}</Link>
-                        ))}
+                            options.map((option) => (
+                                <Link key={option.name} to={option.path}>{option.name}</Link>
+                            ))}
                     </div>
                 )
             }
@@ -29,24 +29,28 @@ function DropdownItem({ description, options, icon }) {
 }
 
 function SideBar() {
-    const pathname = useLocation().pathname
-    console.log(pathname)
+    // const pathname = useLocation().pathname
+    // console.log(pathname)
 
     return (
         <nav className={styles.sidebar}>
             <ul className={styles.options}>
-                {
-                    optionsSideBar.map((item) => (
-                        <>
-                            <Item key={item.name} path={item.path} name={item.name} icon={item.icon} />
-                        </>
-                    ))
-                }
-                {
-                    dropdownOptions.map((dropdown) => (
-                        <DropdownItem key={dropdown} description={dropdown.name} icon={dropdown.icon} options={dropdown.options} />
-                    ))
-                }
+                <>
+                    {
+                        optionsSideBar.map((item) => (
+                          
+                                <Item key={item.name} path={item.path} name={item.name} icon={item.icon} />
+                          
+                        ))
+                    }
+                </>
+                <>
+                    {
+                        dropdownOptions.map((dropdown) => (
+                            <DropdownItem key={dropdown.name} description={dropdown.name} icon={dropdown.icon} options={dropdown.options} />
+                        ))
+                    }
+                </>
             </ul>
         </nav >
     );

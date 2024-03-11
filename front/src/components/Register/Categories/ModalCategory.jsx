@@ -1,26 +1,65 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from "./Categories.module.css";
 import { Icon } from '../../Common';
 import { useDispatch } from 'react-redux';
 import { setModalRegister } from '../../../redux/ui/actions';
 import { toast } from 'react-toastify';
+import { CategoriesApi } from '../../../services';
 
 export default function ModalCategory() {
     const dispatch = useDispatch();
-    const [formValues, setFormValues] = useState({
-        nomeCategoria: '',
-        taxa: '',
-    });
+    const dataCategory = {
+        name: "",
+        tax: "",
+    }
 
-    const handleInputChange = (event) => {
-        setFormValues({ ...formValues, [event.target.name]: event.target.value });
-    };
+    const [name, setName] = useState("")
+    const [tax, setTax] = useState("")
+   
+    const [formValues, setFormValues] = useState(dataCategory);
+
+
+    function objectToFormData(obj) {
+        const formData = new FormData();
+
+        Object.entries(obj).forEach(([key, value]) => {
+            formData.append(key, value);
+        });
+
+        return formData;
+    }
+
+    const updateValues = useCallback(() => {
+        setFormValues({
+            name: name,
+            tax: tax,
+        })
+    }, [name, tax])
+
+
+    async function postCategory() {
+       
+        if (name != undefined && tax != undefined) {
+            const categoryFormData = objectToFormData(formValues)
+            await CategoriesApi.postCategory(categoryFormData);
+            setFormValues({ name: '', tax: '' });
+            dispatch(setModalRegister(false))
+            toast.success("Categoria Criada")
+        } else {
+            toast.warning("Preencha todos os inputs")
+        }
+        
+    }
 
     const handleDiscard = () => {
-        setFormValues({ nomeCategoria: '', taxa: '' });
+        setFormValues({ name: '', tax: '' });
         dispatch(setModalRegister(false));
         toast.success("Categoria descartada")
     };
+
+    useEffect(() => {
+        updateValues()
+    }, [updateValues])
 
     return (
         <div className={styles.background}>
@@ -31,12 +70,12 @@ export default function ModalCategory() {
                         <Icon iconPath={"ph ph-x"} />
                     </button>
                 </div>
-                <form>
+                <form onSubmit={e => e.preventDefault()}>
                     <div className={styles.group}>
                         <label>Nome da categoria</label>
                         <input
-                            value={formValues.nomeCategoria}
-                            onChange={handleInputChange}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             placeholder='Limite de 244 caracteres'
                             type="text"
                             name="nomeCategoria"
@@ -45,15 +84,15 @@ export default function ModalCategory() {
                     <div className={styles.group}>
                         <label>Taxa</label>
                         <input
-                            value={formValues.taxa}
-                            onChange={handleInputChange}
+                            value={tax}
+                            onChange={(e) => setTax(e.target.value)}
                             placeholder='Valor em porcentagem'
-                            type="text"
+                            type="number"
                             name="taxa"
                         />
                     </div>
                     <div className={styles.allButtons}>
-                        <button type="submit" className="btn-blue">Adicionar</button>
+                        <button className="btn-blue" onClick={postCategory}>Adicionar</button>
                         <button onClick={handleDiscard}>Descartar</button>
                     </div>
                 </form>

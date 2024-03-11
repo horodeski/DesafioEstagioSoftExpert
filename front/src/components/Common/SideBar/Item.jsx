@@ -8,7 +8,7 @@ function Item({path, name, icon}) {
         <li className={styles.liStyle}>
             <NavLink to={`/${path}`}>
                 <Icon iconPath={icon} />
-                <a>{name}</a>
+                <span>{name}</span>
             </NavLink>
         </li>)
 }

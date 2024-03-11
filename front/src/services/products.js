@@ -2,15 +2,15 @@ import api from '../plugins/api'
 
 class ProductsApi {
   async getProducts() {
-    const response = await api.get('/products')
+    const response = await api.get('/products.php?op=GET')
     return response.data
   }
   async postProducts(product) {
     let response
-    if (product.id) {
-      response = await api.put(`/products/${product.id}/`, product)
+    if (product.code) {
+      response = await api.put(`/products.php?op=POST`, product)
     } else {
-      response = await api.post('/products/', product)
+      response = await api.post(`/products.php?op=POST`, product)
     }
     return response.data
   }

@@ -1,12 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import LineTable from './LineTable'
 import ModalCategory from './ModalCategory'
 import styles from "./Categories.module.css"
 import { useSelector } from 'react-redux'
 
-function Table({ categories, categoriesData, productsData }) {
-    const {isOpenModalRegister} = useSelector(state => state.uiReducer)
-    
+function Table({ categories, productsData }) {
+    const { isOpenModalRegister } = useSelector(state => state.uiReducer)
+
     return (
         <div className={styles.contentTable}>
             <table>
@@ -22,7 +23,7 @@ function Table({ categories, categoriesData, productsData }) {
                 <tbody>
                     {
                         categories.map((category) => (
-                            <LineTable key={category} category={category} categoriesData={categoriesData} productsData={productsData} code={category.code} name={category.name} tax={category.tax} />
+                            <LineTable key={category.code} category={category} productsData={productsData}   code={category.code} name={category.name} tax={category.tax} />
                         ))
                     }
                 </tbody>
@@ -35,5 +36,9 @@ function Table({ categories, categoriesData, productsData }) {
     )
 }
 
+Table.propTypes = {
+    categories: PropTypes.array,
+    productsData: PropTypes.array
+}
 
 export default Table

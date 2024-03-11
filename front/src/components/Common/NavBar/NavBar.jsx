@@ -24,7 +24,7 @@ export default function NavBar() {
           </button>
         </div>
         <div className={styles.user}>
-          <a>Geovana Horodeski</a>
+          <span>Geovana Horodeski</span>
           <img src="https://avatars.githubusercontent.com/u/99155494?v=4" alt="" />
         </div>
       </div>

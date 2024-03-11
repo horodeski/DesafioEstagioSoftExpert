@@ -52,7 +52,8 @@ img {
 }
 
 
-input {
+input,
+select {
   background-color: transparent;
   border: 1px solid var(--c-gray-700);
   border-radius: 5px;
@@ -61,7 +62,8 @@ input {
   color: white
 }
 
-input:focus {
+input:focus,
+select:focus {
   outline: none;
   border-color: var(--c-blue-500);
   box-shadow: 0 0 0 1px var(--c-blue-500), 0 0 0 4px #88b8dd4d;
@@ -81,8 +83,6 @@ main {
   width: 100%;
   padding-left: 2vw;
 }
-
-
 
 button {
   border-radius: 6px;
