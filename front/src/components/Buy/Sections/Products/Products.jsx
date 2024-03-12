@@ -43,7 +43,7 @@ function Products() {
     setSectionMore(false)
   };
 
-  const addToCartTeste =  async(code) => {
+  const addToCartTeste = async (code) => {
     toast.success("Produto adicionado ao carrinho")
     const findProducts = allProducts.find(i => i.code == code)
     console.log(findProducts)
@@ -89,7 +89,7 @@ function Products() {
             <div className={styles.allProducts} style={seeMoreState ? { marginBottom: "8vh" } : { marginBottom: "5vh" }} >
               {
                 filteredProducts.map((product) => (
-                  <CardProduct key={product.code} price={product.price} description={product.description} category={product.category} name={product.name} toggleCart={e => addToCartTeste(product.code)} />
+                  <CardProduct key={product.code} price={product.price} amount={amount} setAmount={setAmount} description={product.description} category={product.category} name={product.name} toggleCart={e => addToCartTeste(product.code)} />
                 ))
               }
               {
