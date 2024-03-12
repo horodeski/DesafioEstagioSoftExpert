@@ -1,6 +1,7 @@
 .allProducts {
     margin-top: 1vh;
     display: flex;
+    width: 100%;
     position: relative;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -17,10 +18,10 @@
     justify-content: center;
     gap: 1vw;
     align-items: center;
-    height: 11vh;
+    height: 8vh;
     position: absolute;
     cursor: pointer;
-    bottom: 0;
+    bottom: -4vh;
     background: rgb(2,0,36);
     background: linear-gradient(180deg, rgba(2,0,36,0) 0%, rgba(31,31,31,0.7987570028011204) 50%, rgba(20,20,20,1) 100%);
 }

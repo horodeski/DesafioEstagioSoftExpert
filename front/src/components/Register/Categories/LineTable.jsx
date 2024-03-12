@@ -7,8 +7,8 @@ function LineTable({ code, name, tax, category, productsData }) {
 
     const findProducts = useCallback(() => {
         const findCategory = productsData.filter(i => i.category == category.name)
-        const teste = Object.keys(findCategory)
-        return teste
+        const obj = Object.keys(findCategory)
+        return obj.length
     }, [category, productsData])
 
     function objectToFormData(obj) {

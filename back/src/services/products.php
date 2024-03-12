@@ -11,9 +11,9 @@ function getProducts()
     return json_encode($products);
 };
 
-function postProduct($name, $price, $category_code, $amount)
+function postProduct($name, $price, $description, $category_code, $amount,)
 {
-    $addPRoduct = myPDO->prepare("INSERT INTO products(NAME, PRICE, CATEGORY_CODE, AMOUNT) VALUES ('{$name}', {$price}, {$category_code}, {$amount})");
+    $addPRoduct = myPDO->prepare("INSERT INTO products(NAME, PRICE, DESCRIPTION, CATEGORY_CODE, AMOUNT) VALUES ('{$name}', {$price},{$description}, '{$category_code}', {$amount})");
     $addPRoduct->execute();
 };
 

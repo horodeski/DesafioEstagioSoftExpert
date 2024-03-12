@@ -21,7 +21,7 @@ export default function Products() {
     
     setFilteredProducts(filtered);
   };
-  console.log(filteredProducts)
+
 
   useEffect(() => {
     getProducts();

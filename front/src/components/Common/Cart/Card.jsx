@@ -3,7 +3,7 @@ import Icon from '../Icon'
 import styles from "./Cart.module.css"
 
 
-function Card() {
+function Card({ price, name, amount }) {
     return (
         <div className={styles.card}>
             <button>
@@ -11,12 +11,12 @@ function Card() {
             </button>
             <div>
                 <h3>
-                    Bola
+                    {name}
                 </h3>
-                <span className={styles.unitPrice}>R$2.00/Item</span>
+                <span className={styles.unitPrice}>R${price}/Item</span>
                 <div className={styles.priceAmount}>
-                    <span>R$20.00</span>
-                    <span>10 Unids.</span>
+                    <span>R$7</span>
+                    <span>{amount} Unids.</span>
                 </div>
             </div>
         </div>

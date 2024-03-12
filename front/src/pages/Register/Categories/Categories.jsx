@@ -13,7 +13,6 @@ function Categories() {
     const data = await CategoriesApi.getCategories();
     setCategoriesData(data);
     setFilteredCategories(data)
-    console.log(data)
   };
 
   const handleSearchChange = (newValue) => {

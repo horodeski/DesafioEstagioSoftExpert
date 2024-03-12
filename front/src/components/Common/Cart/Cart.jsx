@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setModalCart } from '../../../redux/ui/actions'
 import Icon from '../Icon'
 import styles from "./Cart.module.css"
 import { Card, Reckoning } from './'
 
-function Cart() {
 
+function Cart() {
     const dispatch = useDispatch()
+    const { cartItem } = useSelector(state => state.FCReducer)
+    console.log(cartItem)
+
     return (
         <div className={styles.background}>
             <div className={styles.modal}>
@@ -19,7 +22,11 @@ function Cart() {
                 </div>
                 <div className={styles.body}>
                     <div className={styles.allProducts}>
-                        <Card />
+                        {
+                            cartItem.map((i) => (
+                                <Card key={i.code} name={i.name} amount={i.amount} price={i.price} />
+                            ))
+                        }
                     </div>
                     <Reckoning />
                 </div>

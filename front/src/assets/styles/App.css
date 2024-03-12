@@ -53,7 +53,7 @@ img {
 
 
 input,
-select {
+select, textarea {
   background-color: transparent;
   border: 1px solid var(--c-gray-700);
   border-radius: 5px;
@@ -63,7 +63,7 @@ select {
 }
 
 input:focus,
-select:focus {
+select:focus, textarea:focus {
   outline: none;
   border-color: var(--c-blue-500);
   box-shadow: 0 0 0 1px var(--c-blue-500), 0 0 0 4px #88b8dd4d;

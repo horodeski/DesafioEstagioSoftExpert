@@ -13,10 +13,11 @@ function runRequestMethod()
         case "POST":
             $name = $_POST["name"];
             $price = $_POST["price"];
+            $description = $_POST["description"];
             $category_code = $_POST["category_code"];
             $amount = $_POST["amount"];
             echo $_GET["op"];
-            echo postProduct($name, $price, $category_code, $amount);
+            echo postProduct($name, $price, $description, $category_code, $amount);
 
             break;
         case "PUT":

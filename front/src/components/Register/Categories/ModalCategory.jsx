@@ -89,6 +89,7 @@ export default function ModalCategory() {
                             placeholder='Valor em porcentagem'
                             type="number"
                             name="taxa"
+                            max={99}
                         />
                     </div>
                     <div className={styles.allButtons}>

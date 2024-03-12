@@ -1,37 +1,34 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { Icon } from '../../Common'
 import styles from "./Products.module.css"
-import { useState } from 'react';
 
 function LineTable({ name, code, price, category, tax, amount }) {
     const [alert, setAlert] = useState(false)
+
     function productTaxed(tax, price) {
         const taxAccount = parseFloat(tax) / 100;
         const originalUnitValue = parseFloat(price);
         const taxedUnit = originalUnitValue + (originalUnitValue * taxAccount);
         return taxedUnit.toFixed(2);
     }
-
-    function alertStock () {
-        if (amount <= 10) {
-            setAlert(true)
-        }
+    function teste() {
+        setAlert(!alert)
+        console.log("w")
     }
-    useEffect(() => {
-        alertStock
-    }, [])
 
     return (
         <tr>
             <td>{code}</td>
             <td>{name}</td>
-            <td style={amount <= 10 ? { color: "red" } : { color: "white" }}>{amount}</td>
-            {
-                alert &&
-                <div className={styles.alert}>
-                    <span>Quantidade muito baixa</span>
-                </div>
-            }
+            <td onMouseEnter={teste} onMouseOut={teste} className={styles.amount} style={amount <= 10 ? { color: "red" } : { color: "white" }}>
+                {amount}
+                {
+                    alert &&
+                    <div className={styles.alert}>
+                        <span>Quantidade muito baixa</span>
+                    </div>
+                }
+            </td>
             <td>R${price}</td>
             <td>{productTaxed(tax, price)}</td>
             <td>{category} (Tax: {tax}%)</td>

@@ -14,3 +14,4 @@ export const setModalFavorite = (payload) => ({
     type: uiTypes.SET_MODAL_FAVORITE,
     payload
 });
+

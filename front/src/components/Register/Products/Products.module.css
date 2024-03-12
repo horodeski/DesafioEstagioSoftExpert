@@ -99,3 +99,18 @@
     display: flex;
     gap: .5vw;
 }
+
+.alert {
+    position: absolute;
+    z-index: 88;
+    background-color: var(--c-gray-700);
+    padding: .5vw;
+    color: white !important;
+    bottom: -7vh;
+    border-radius: 7px;
+    text-align: center;
+    border: var(--c-gray-600) 1px solid;
+}
+.amount {
+    position: relative;
+}

@@ -12,11 +12,13 @@ export default function ModalProduct() {
         name: "",
         price: "",
         amount: "",
+        description: "",
         category_code: ""
     }
     const [categories, setCategories] = useState([])
     const [nameProduct, setName] = useState("")
     const [priceProduct, setPrice] = useState(0)
+    const [descProduct, setDescription] = useState("")
     const [amountProduct, setAmount] = useState("")
     const [category_code, setCategory_code] = useState("")
 
@@ -36,10 +38,11 @@ export default function ModalProduct() {
         setFormValues({
             name: nameProduct,
             price: priceProduct,
+            description: descProduct,
             amount: amountProduct,
             category_code: category_code
         })
-    }, [nameProduct, priceProduct, amountProduct, category_code])
+    }, [nameProduct, priceProduct, amountProduct, category_code, descProduct])
 
     const getcategories = async () => {
         const data = await CategoriesApi.getCategories()
@@ -53,6 +56,7 @@ export default function ModalProduct() {
         setFormValues({
             name: "",
             price: "",
+            description: "",
             amount: "",
             category_code: ""
         });
@@ -66,7 +70,7 @@ export default function ModalProduct() {
         const categorySelected = categories.find(i => i.code == category_code)
         if (categorySelected) {
             const calc = (priceProduct * (categorySelected.tax / 100)).toFixed(2);
-            console.log(calc) 
+            console.log(calc)
             return calc
         } else {
             return "0"
@@ -78,6 +82,7 @@ export default function ModalProduct() {
             name: "",
             price: "",
             amount: "",
+            description: "",
             category_code: ""
         });
         dispatch(setModalRegister(false));
@@ -124,6 +129,19 @@ export default function ModalProduct() {
                                 )
                             }
                         </select>
+                    </div>
+                    <div className={styles.group}>
+                        <label>Decrição</label>
+                        <div className={styles.priceTax}>
+                            <textarea
+                                value={descProduct}
+                                onChange={(e) => setDescription(e.target.value)}
+                                placeholder='Valor em real'
+                                type="number"
+                                name="taxa"
+
+                            />
+                        </div>
                     </div>
                     <div className={styles.group}>
                         <label>Preço</label>

@@ -1,23 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Icon from "../Common/Icon"
 import styles from "./Buy.module.css"
 
-function CardProduct() {
+function CardProduct({name, category, description, price, toggleCart}) {
+    const [amount, setAmount] = useState(1)
     return (
         <div className={styles.productCard}>
             <div className={styles.titlePrice}>
-                <span className={styles.title}>Bola</span>
-                <span>R$5.00</span>
+                <span className={styles.title}>{name}</span>
+                <span>R${price}</span>
             </div>
-            <span>Toys</span>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim quam consectetur vitae officia reiciendis voluptatesi...</p>
+            <span>{category}</span>
+            <p>{description}</p>
             <div className={styles.right}>
                 <div className={styles.amount}>
                     <button>-</button>
-                    <span>2</span>
+                    <span>{amount}</span>
                     <button>+</button>
                 </div>
-                <div className={styles.allButtons}>
+                <div className={styles.allButtons} onClick={toggleCart}>
                     <button className='btn-blue'>
                         Adicionar ao carrinho
                     </button>
