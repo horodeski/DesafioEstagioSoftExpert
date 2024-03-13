@@ -1,5 +1,10 @@
-const FCTypes = {
-    ADD_TO_CART: "ADD_TO_CART"
+const cartTypes = {
+    ADD_TO_CART: "ADD_TO_CART",
+    REMOVE_PRODUCT: "REMOVE_PRODUCT",
+    CHANGES_TOTAL: "CHANGES_TOTAL",
+    CHANGES_TOTAL_FINAL: "CHANGES_TOTAL_FINAL",
+    CHANGES_TAX: "CHANGES_TAX"
 }
 
-export {FCTypes}
+
+export { cartTypes }

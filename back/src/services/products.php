@@ -13,7 +13,7 @@ function getProducts()
 
 function postProduct($name, $price, $description, $category_code, $amount,)
 {
-    $addPRoduct = myPDO->prepare("INSERT INTO products(NAME, PRICE, DESCRIPTION, CATEGORY_CODE, AMOUNT) VALUES ('{$name}', {$price},{$description}, '{$category_code}', {$amount})");
+    $addPRoduct = myPDO->prepare("INSERT INTO products(NAME, PRICE, DESCRIPTION, CATEGORY_CODE, AMOUNT) VALUES ('{$name}', {$price},'{$description}', '{$category_code}', {$amount})");
     $addPRoduct->execute();
 };
 

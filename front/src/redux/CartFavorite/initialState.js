@@ -1,3 +1,8 @@
+import products from "../../services/products";
+
 export const CartState = {
-    cartItem: []
+    products: [],
+    totalCart: 0,
+    totalFinal: 0,
+    tax: 0
 }

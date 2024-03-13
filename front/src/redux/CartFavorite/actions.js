@@ -1,6 +1,27 @@
-import {FCTypes} from "./types";
+import { cartTypes } from "./types";
 
 export const addToCart = (payload) => ({
-    type: FCTypes.ADD_TO_CART,
+    type: cartTypes.ADD_TO_CART,
+    payload
+});
+
+export const removeItem = (payload) => ({
+    type: cartTypes.REMOVE_PRODUCT,
+    payload
+});
+
+export const changesTotal = (payload) => ({
+    type: cartTypes.CHANGES_TOTAL,
+    payload
+});
+
+export const changesTax = (payload) => ({
+    type: cartTypes.CHANGES_TAX,
+    payload
+});
+
+
+export const changesTotalFinal = (payload) => ({
+    type: cartTypes.CHANGES_TOTAL_FINAL,
     payload
 });

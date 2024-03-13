@@ -2,16 +2,8 @@ import React, { useState } from 'react'
 import Icon from "../Common/Icon"
 import styles from "./Buy.module.css"
 
-function CardProduct({ name, category, description, price, toggleCart, amount }) {
-    const [amount, setAmount] = useState(1)
-    function increment() {
-        setAmount(amount + 1)
-    }
-    function decrement() {
-        if (amount > 1) {
-            setAmount(amount - 1)
-        }
-    }
+function CardProduct({ name, category, description, price, toggleCart, amount, increment, decrement }) {
+
     return (
         <div className={styles.productCard}>
             <div className={styles.titlePrice}>
