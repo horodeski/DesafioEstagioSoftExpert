@@ -41,16 +41,16 @@ function Reckoning({totalValue, tax, valorFinal, discount}) {
         },
         {
             desc: "Tax",
-            value: tax
+            value: `+ R$${tax}`
         },
         {
             icon: "ph ph-star",
             desc: "Desconto",
-            value: `R$${discount}`
+            value: `- R$${discount}`
         },
         {
             desc: "Valor Final",
-            value: valorFinal
+            value: `R$${valorFinal}`
         }
     ]
 

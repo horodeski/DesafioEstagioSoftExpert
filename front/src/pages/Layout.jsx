@@ -26,7 +26,7 @@ function Layout() {
                 <Favorite />
             }
             <ToastContainer
-                position="bottom-right"
+                position="bottom-left"
                 autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}
