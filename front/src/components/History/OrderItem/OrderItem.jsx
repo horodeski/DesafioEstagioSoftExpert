@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react'
+import { Card, Header, NoItem, Reckoning } from '.'
 import { useDispatch, useSelector } from 'react-redux'
-import { changesTax, changesTotal, deleteAll, removeItem } from '../../../redux/CartFavorite/actions'
-import { OrdersApi } from '../../../services'
-import { Card, Header, NoItem, Reckoning, Loader } from './'
-import { toast } from 'react-toastify'
+import { useEffect, useState } from 'react'
+import { changesTax, changesTotal, removeItem } from '../../../redux/CartFavorite/actions'
 import styles from "./Cart.module.css"
+import { toast } from 'react-toastify'
+import { OrdersApi } from '../../../services'
 
 function Cart() {
     const [final, setFinal] = useState(0)
-    const [loader, setLoader] = useState(false)
     const dispatch = useDispatch()
     const { products, totalCart, tax } = useSelector(state => state.FCReducer)
     let copyProducts = products
     const [vProducts, setV] = useState(copyProducts)
+    const discount = 4
 
     const sumPrices = () => {
         const allPrices = vProducts.map(i => i.priceAmount)
@@ -30,6 +30,8 @@ function Cart() {
         finalCart()
     }, [vProducts])
 
+    console.log(products)
+
     const sumTax = () => {
         const allPrices = vProducts.map(i => i.priceDifference * i.amount)
         const sum = allPrices.reduce(
@@ -45,6 +47,7 @@ function Cart() {
         const tax = sumTax()
         const prices = sumPrices()
         const calc = (parseFloat(tax) + parseFloat(prices)).toFixed(2)
+        console.log(calc)
         setFinal(calc)
     }
 
@@ -68,81 +71,63 @@ function Cart() {
     }
 
     const finishCart = async () => {
+        toast.success("Produto adicionado ao carrinho")
+        const order_code = Math.random().toString(16).slice(2)
+        const allAmount = vProducts.map(i => i.amount)
+        const sum = allAmount.reduce(
+            (accumulator, currentValue) => accumulator + currentValue,
+            0
+        )
+
+
         const order = {
-            code: Math.floor(Math.random() * 898) + 101,
+            code: order_code,
             tax: tax,
             total: totalCart,
-
         }
-
-        const orderFormData = objectToFormData(order)
-        await OrdersApi.postOrder(orderFormData);
-
-        products.forEach(async (i) => {
+        products.map(async (i) => {
             const order_item = {
-                order_code: order.code,
+                code: Math.random().toString(16).slice(2),
+                order_code: order_code,
                 product_code: i.code,
                 amount: i.amount,
                 price: i.price,
-                tax: i.taxPercent
+                tax: i.tax
             }
             const orderItemFormData = objectToFormData(order_item)
             await OrdersApi.postOrderItem(orderItemFormData)
         })
 
-
-        setLoader(true)
-
-        setTimeout(() => {
-            setLoader(false)
-            toast.success("Compra realizada!")
-            deleteCart()
-        }, 2000)
+        const orderFormData = objectToFormData(order)
+        await OrdersApi.postOrder(orderFormData);
 
     }
-
-    function deleteCart() {
-        dispatch(deleteAll(products.length))
-    }
-
-    function verify() {
-        return vProducts.length == 0
-    }
-
-
-    useEffect(() => {
-        verify()
-    }, [vProducts])
 
     return (
         <div className={styles.background}>
-            <div className={styles.modal} style={verify() ? {justifyContent: "flex-start", gap: "5vh"} : {justifyContent: "space-between"}}>
+            <div className={styles.modal}>
                 <Header />
                 <div className={styles.body}>
                     {
-                        verify()
-                            ?
+                        vProducts.length == 0 ?
                             <NoItem /> :
-                            <>
-                                <div className={styles.allProducts}>
-                                    {
-                                        vProducts.map((i) => (
-                                            <Card
-                                                key={i.code}
-                                                code={i.code}
-                                                deleteItem={() => deleteItem(i.code)}
-                                                priceAmount={i.priceAmount}
-                                                name={i.name}
-                                                amount={i.amount}
-                                                price={i.price}
-                                            />
-                                        ))
-                                    }
-                                </div>
-                                <Reckoning tax={tax} valorFinal={final} totalValue={totalCart} buy={finishCart} deleteCart={deleteCart} />
-                            </>
+                            <div className={styles.allProducts}>
+                                {
+                                    vProducts.map((i) => (
+                                        <Card
+                                            key={i.code}
+                                            code={i.code}
+                                            deleteItem={() => deleteItem(i.code)}
+                                            priceAmount={i.priceAmount}
+                                            name={i.name}
+                                            amount={i.amount}
+                                            price={i.price}
+                                        />
+                                    ))
+                                }
+                            </div>
                     }
-                    <Loader loader={loader}/>
+                    <Reckoning discount={discount} tax={tax} valorFinal={final} totalValue={totalCart} buy={finishCart} />
                 </div>
             </div>
         </div>

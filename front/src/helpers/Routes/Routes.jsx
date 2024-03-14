@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Categories, Comprar, Layout, NoPage, ProductsRegister, CategoriesRegister } from "../../pages";
+import { Categories, Comprar, Layout, NoPage, ProductsRegister, CategoriesRegister, History } from "../../pages";
 
 const routes = createBrowserRouter([
     {
@@ -10,6 +10,10 @@ const routes = createBrowserRouter([
             {
                 path: "/",
                 element: <Comprar />
+            },
+            {
+                path: "/historico",
+                element: <History />
             },
             {
                 path: "categories",

@@ -1,0 +1,12 @@
+.table th {
+    text-align: left;
+}
+
+.table button {
+    width: max-content;
+    opacity: 0;
+}
+
+.table tr:hover button {
+    opacity: 1;
+}

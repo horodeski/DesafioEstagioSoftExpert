@@ -52,6 +52,26 @@ img {
 }
 
 
+thead tr th{
+  font-weight: 400;
+  color: var(--c-gray-400);
+  text-align: left;
+}
+
+tbody tr td {
+  padding: 1vh 0;
+}
+
+tbody tr td:last-child {
+  width: 4vw;
+}
+
+table {
+  width: 100%;
+  margin-top: 2vh;
+}
+
+
 input,
 select, textarea {
   background-color: transparent;

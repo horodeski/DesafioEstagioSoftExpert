@@ -5,7 +5,7 @@ function runRequestMethod()
 {
     $method = $_SERVER['REQUEST_METHOD'];
 
-    switch ($method) {
+    switch ($_GET["op"]) {
         case "GET":
             echo getOrderItem();
             break;

@@ -15,13 +15,13 @@ function Products() {
   const [initialProducts, setInitialProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [amount, setAmount] = useState(1);
-
-  const { products } = useSelector(state => state.FCReducer)
   
+  console.log(allProducts)
+
   const getProducts = useCallback(async () => {
     const data = await ProductsApi.getProducts();
     setAllProducts(data);
-  
+    
     if (seeMoreState) {
       setInitialProducts(data.slice(6).reverse());
     } else {

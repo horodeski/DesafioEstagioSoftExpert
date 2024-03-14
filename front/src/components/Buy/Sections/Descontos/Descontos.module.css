@@ -1,9 +1,10 @@
 .allProducts {
     margin-top: 1vh;
     display: flex;
+    gap: 1vw;
     position: relative;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 .search {
     width: 100%;

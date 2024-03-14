@@ -25,3 +25,8 @@ export const changesTotalFinal = (payload) => ({
     type: cartTypes.CHANGES_TOTAL_FINAL,
     payload
 });
+
+export const deleteAll = (payload) => ({
+    type: cartTypes.DELETE_ALL,
+    payload
+});

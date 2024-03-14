@@ -14,6 +14,15 @@ class ProductsApi {
     }
     return response.data
   }
+  async updateProducts(product) {
+    let response
+    if (product.code) {
+      response = await api.put(`/products.php?op=PUT`, product)
+    } else {
+      response = await api.post(`/products.php?op=PUT`, product)
+    }
+    return response.data
+  }
   async deleteProduct(product) {
     const response = await api.delete(`/products/${product.id}/`)
     return response.data

@@ -3,30 +3,43 @@ import CardProduct from '../../CardProduct'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '../../../../redux/CartFavorite/actions'
+import { ProductsApi } from '../../../../services'
 
-function ProductsContent({ filteredProducts, amount, setAmount, allProducts }) {
+function ProductsContent({ filteredProducts, allProducts }) {
     const dispatch = useDispatch()
 
-    const { products } = useSelector(state => state.FCReducer)
+    function objectToFormData(obj) {
+        const formData = new FormData();
 
+        Object.entries(obj).forEach(([key, value]) => {
+            formData.append(key, value);
+        });
 
-    function increment() {
-        setAmount(amount + 1)
+        return formData;
+    }
+    async function putProduct(data) {
+        await ProductsApi.updateProducts(data);
     }
 
-    function decrement() {
-        if (amount > 1) {
-            setAmount(amount - 1)
+
+    async function updateStock(code) {
+        const findProduct = allProducts.find(i => i.code == code)
+        const calc = findProduct.amount - amount
+        
+        const data = {
+            code: code,
+            amount: calc
         }
+        
+        const f_data = objectToFormData(data)
+        putProduct(f_data)
     }
-
 
     const addProdToCart = (code) => {
         toast.success("Produto adicionado ao carrinho")
         const findProducts = allProducts.find(i => i.code == code)
         const priceAmount = amount * findProducts.price
         const price = parseInt(findProducts.price)
-
 
         function CalcTaxPercent() {
             const tax = parseInt(findProducts.tax)
@@ -52,7 +65,7 @@ function ProductsContent({ filteredProducts, amount, setAmount, allProducts }) {
             priceDifference: priceDifference(),
             taxPercent: parseInt(findProducts.tax)
         }
-
+        updateStock(product.code)
         dispatch(addToCart(product))
 
     }
@@ -64,11 +77,9 @@ function ProductsContent({ filteredProducts, amount, setAmount, allProducts }) {
                     <CardProduct
                         key={product.code}
                         price={product.price}
-                        amount={amount}
+                        productAmount={product.amount}
                         description={product.description}
                         category={product.category}
-                        increment={increment}
-                        decrement={decrement}
                         name={product.name}
                         toggleCart={() => addProdToCart(product.code)}
                     />

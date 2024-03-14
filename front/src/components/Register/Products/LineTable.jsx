@@ -11,16 +11,16 @@ function LineTable({ name, code, price, category, tax, amount }) {
         const taxedUnit = originalUnitValue + (originalUnitValue * taxAccount);
         return taxedUnit.toFixed(2);
     }
-    function teste() {
+
+    function sendAlert() {
         setAlert(!alert)
-        console.log("w")
     }
 
     return (
         <tr>
-            <td>{code}</td>
+            <td>#{code}</td>
             <td>{name}</td>
-            <td onMouseEnter={teste} onMouseOut={teste} className={styles.amount} style={amount <= 10 ? { color: "red" } : { color: "white" }}>
+            <td onMouseEnter={sendAlert} onMouseOut={sendAlert} className={styles.amount} style={amount <= 10 ? { color: "red" } : { color: "white" }}>
                 {amount}
                 {
                     alert &&
