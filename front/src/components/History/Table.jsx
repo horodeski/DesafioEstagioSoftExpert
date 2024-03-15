@@ -1,20 +1,7 @@
-import React from 'react'
-
+import LineTable from "./LineTable"
 import styles from "./history.module.css"
 
-function LineTable({ code, tax, total, bla }) {
-    return (
-        <tr>
-            <td>{code}</td>
-            <td>{tax}</td>
-            <td>{total}</td>
-            <td><button onClick={() => bla({code})}>Ver mais sobre a compra</button></td>
-        </tr>
-    )
-}
-
-export default function Table({ orders, bla }) {
-
+function Table({ orders, toggleModal }) {
     return (
         <table className={styles.table}>
             <thead>
@@ -24,9 +11,11 @@ export default function Table({ orders, bla }) {
             </thead>
             <tbody>
                 {orders.map((item) => (
-                    <LineTable key={item.code} code={item.code} tax={item.tax} bla={bla(item.code)}  total={item.total} />
+                    <LineTable key={item.code} code={item.code} tax={item.tax} toggleModal={toggleModal(item.code)}  total={item.total} />
                 ))}
             </tbody>
         </table>
     )
 }
+
+export default Table

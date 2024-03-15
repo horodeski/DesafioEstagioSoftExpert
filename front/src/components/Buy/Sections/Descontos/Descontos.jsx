@@ -16,12 +16,7 @@ function Descontos() {
     const productsLessPrice = allProducts.filter((product) => product.price < 20)
     setLessPrice(productsLessPrice)
   };
-
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-
+  // getProducts()
   function increment() {
     setAmount(amount + 1)
   }
@@ -32,16 +27,10 @@ function Descontos() {
     }
   }
 
-
-
   return (
     <section>
       <h3>Aproveite os descontos da semana</h3>
       <div className={styles.allProducts}>
-        <div className={styles.search}>
-          <input type="text" name="" id="" placeholder="Pesquise por nome..." />
-          <button>Pesquisar</button>
-        </div>
         <div className={styles.allProducts}>
           {lessPrice.map((product) => (
             <CardProduct

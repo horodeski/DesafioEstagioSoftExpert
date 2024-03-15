@@ -32,8 +32,8 @@
     position: relative;
 }
 
-.modal .card button {
-    /* position: absolute; */
+.modal .card .deletebtn {
+    position: absolute;
     top: 1vh;
     right: 1vh;
 }
@@ -87,21 +87,6 @@
 
 .reckoning .list i {
     color: var(--c-blue-500) !important;
-}
-
-.reckoning .discount {
-    position: relative;
-}
-
-.reckoning .alert {
-    position: absolute;
-    bottom: -4vh;
-    font-size: .7em;
-    padding: .4vw;
-    z-index: 2;
-    border-radius: 10px;
-    background-color: var(--c-gray-700);
-    border: 1px solid var(--c-gray-500);
 }
 
 .reckoning .allButtons {
@@ -164,10 +149,18 @@
     align-items: center;
     justify-content: center;
 }
-.contentModal i{
+
+.contentModal i {
     margin-bottom: 2vh;
     font-size: 6em;
 }
+
+.amount {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+}
+
 
 @keyframes l18 {
 

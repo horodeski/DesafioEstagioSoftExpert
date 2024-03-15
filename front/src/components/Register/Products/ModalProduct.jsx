@@ -63,14 +63,12 @@ export default function ModalProduct() {
         dispatch(setModalRegister(false))
         toast.success("Produto Criado")
 
-        console.log(formValues)
     }
 
     function teste(priceProduct, category_code) {
         const categorySelected = categories.find(i => i.code == category_code)
         if (categorySelected) {
             const calc = (priceProduct * (categorySelected.tax / 100)).toFixed(2);
-            console.log(calc)
             return calc
         } else {
             return "0"

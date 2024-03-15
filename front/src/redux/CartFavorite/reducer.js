@@ -12,18 +12,19 @@ const FCReducer = (state = CartState, action) => {
             products: state.products.map((product) =>
               product.code === action.payload.code
                 ? {
-                  ...product,
-                  amount: product.amount + action.payload.amount,
-                  priceAmount: product.price * (action.payload.amount + product.amount)
-                }
-                : (product.amount > 1 && action.payload.amount == 1 ? {
-                  ...product,
-                  amount: product.amount + action.payload.amount,
-                  priceAmount: product.priceAmount + (product.price),
-
-                } : product)
+                    ...product,
+                    amount: product.amount + action.payload.amount,
+                    priceAmount:
+                      product.price * (1 + product.amount),
+                  }
+                : product.amount > 1 && action.payload.amount == 1
+                ? {
+                    ...product,
+                    amount: product.amount + action.payload.amount,
+                    priceAmount: product.priceAmount + product.price,
+                  }
+                : product
             ),
-
           };
         } else {
           return {
@@ -31,13 +32,13 @@ const FCReducer = (state = CartState, action) => {
             products: state.products.map((product) =>
               product.code === action.payload.code
                 ? {
-                  ...product,
-                  amount: product.amount + action.payload.amount,
-                  priceAmount: product.price + product.price
-                }
+                    ...product,
+                    amount: product.amount + action.payload.amount,
+                    priceAmount: product.price + product.price,
+                  }
                 : product
             ),
-          }
+          };
         }
       }
 
@@ -55,7 +56,7 @@ const FCReducer = (state = CartState, action) => {
         ...state,
         totalCart: [action.payload],
       };
-    case cartTypes.CHANGES_FINAL_VALUE:
+    case cartTypes.CHANGES_TOTAL_FINAL:
       return {
         ...state,
         totalFinal: [action.payload],
@@ -69,8 +70,20 @@ const FCReducer = (state = CartState, action) => {
       const teste = state.products.splice(0, action.payload);
       return {
         ...state,
-        products: []
-      }
+        products: [],
+      };
+    }
+    case cartTypes.INCREMENT_AMOUNT: {
+      return {
+        ...state,
+        products: state.products.map((product) => {
+          if (product.code == action.payload) {    
+              return { ...product, amount: product.amount + 1, priceAmount: (product.amount + 1) * product.price };
+          } else {
+            return product;
+          }
+        }),
+      };
     }
     default:
       return state;

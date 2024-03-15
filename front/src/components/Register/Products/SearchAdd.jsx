@@ -8,7 +8,6 @@ function SearchAddProducts({ searchValue, onSearchChange }) {
  
   function toggleModal() {
     dispatch(setModalRegister(true))
-    console.log("s")
   }
  
   return (

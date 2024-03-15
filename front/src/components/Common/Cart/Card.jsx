@@ -1,16 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import Icon from '../Icon'
 import styles from "./Cart.module.css"
-import { removeItem } from '../../../redux/CartFavorite/actions'
+import { incrementAmount } from '../../../redux/CartFavorite/actions'
 
-
-
-function Card({ price, name, amount, priceAmount, code, deleteItem }) {
-
+function Card({ price, name, amount, priceAmount, code, deleteItem, increment}) {
+ 
     return (
         <div className={styles.card}>
-            <button onClick={deleteItem}>
+            <button className={styles.deletebtn} onClick={() => { deleteItem(code) }}>
                 <Icon iconPath={"ph ph-trash"} />
             </button>
             <div>
@@ -20,7 +18,10 @@ function Card({ price, name, amount, priceAmount, code, deleteItem }) {
                 <span className={styles.unitPrice}>R${price}/Item</span>
                 <div className={styles.priceAmount}>
                     <span>R${priceAmount}</span>
-                    <span>{amount} Unids.</span>
+                    <div className={styles.amount}>
+                        <span>{amount} Unids.</span>
+                        <button onClick={() => { increment(code)}}>+</button>
+                    </div>
                 </div>
             </div>
         </div>

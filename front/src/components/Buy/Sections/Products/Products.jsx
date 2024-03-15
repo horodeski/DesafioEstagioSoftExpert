@@ -16,7 +16,7 @@ function Products() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [amount, setAmount] = useState(1);
   
-  console.log(allProducts)
+
 
   const getProducts = useCallback(async () => {
     const data = await ProductsApi.getProducts();
@@ -35,7 +35,6 @@ function Products() {
   const handleSearchChange = (newValue) => {
     setSearchValue(newValue);
     setSectionMore(false);
-    console.log(newValue);
     const filtered = allProducts.filter((product) =>
       product.name.toLowerCase().includes(newValue.toLowerCase())
     );

@@ -5,6 +5,10 @@ class OrdersApi {
     const response = await api.get('/order.php?op=GET')
     return response.data
   }
+  async getOrderItem() {
+    const response = await api.get('/order_item.php?op=GET')
+    return response.data
+  }
   async postOrder(order) {
     let response
     if (order.code) {

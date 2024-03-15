@@ -10,8 +10,7 @@ export const setModalCart = (payload) => ({
     payload
 });
 
-export const setModalFavorite = (payload) => ({
-    type: uiTypes.SET_MODAL_FAVORITE,
+export const setModalMoreInfo = (payload) => ({
+    type: uiTypes.SET_MODAL_MORE_INFO,
     payload
 });
-

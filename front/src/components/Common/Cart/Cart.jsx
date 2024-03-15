@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { changesTax, changesTotal, deleteAll, removeItem } from '../../../redux/CartFavorite/actions'
+import { changesTax, changesTotal, changesTotalFinal, deleteAll, incrementAmount, removeItem } from '../../../redux/CartFavorite/actions'
 import { OrdersApi } from '../../../services'
 import { Card, Header, NoItem, Reckoning, Loader } from './'
 import { toast } from 'react-toastify'
 import styles from "./Cart.module.css"
 
 function Cart() {
+    const dispatch = useDispatch()
     const [final, setFinal] = useState(0)
     const [loader, setLoader] = useState(false)
-    const dispatch = useDispatch()
-    const { products, totalCart, tax } = useSelector(state => state.FCReducer)
+    const { products, totalCart, tax, totalFinal } = useSelector(state => state.FCReducer)
     let copyProducts = products
     const [vProducts, setV] = useState(copyProducts)
+
 
     const sumPrices = () => {
         const allPrices = vProducts.map(i => i.priceAmount)
@@ -21,6 +22,7 @@ function Cart() {
             0
         )
         dispatch(changesTotal(sum))
+        console.log(sum)
         return sum
     }
 
@@ -29,6 +31,10 @@ function Cart() {
         sumTax()
         finalCart()
     }, [vProducts])
+    
+    useEffect(() => {
+        finalCart()
+    }, [products])
 
     const sumTax = () => {
         const allPrices = vProducts.map(i => i.priceDifference * i.amount)
@@ -37,6 +43,7 @@ function Cart() {
             0
         )
         const finalSum = sum.toFixed(2)
+        console.log(finalSum)
         dispatch(changesTax(finalSum))
         return finalSum
     }
@@ -45,7 +52,10 @@ function Cart() {
         const tax = sumTax()
         const prices = sumPrices()
         const calc = (parseFloat(tax) + parseFloat(prices)).toFixed(2)
-        setFinal(calc)
+        console.log(calc)
+        dispatch(changesTotalFinal(calc))
+        console.log(calc)
+        return calc
     }
 
     const deleteItem = async (code) => {
@@ -71,7 +81,7 @@ function Cart() {
         const order = {
             code: Math.floor(Math.random() * 898) + 101,
             tax: tax,
-            total: totalCart,
+            total: totalFinal,
 
         }
 
@@ -84,6 +94,7 @@ function Cart() {
                 product_code: i.code,
                 amount: i.amount,
                 price: i.price,
+                product: i.name,
                 tax: i.taxPercent
             }
             const orderItemFormData = objectToFormData(order_item)
@@ -101,6 +112,14 @@ function Cart() {
 
     }
 
+    async function increment(code) {
+        dispatch(incrementAmount(code))
+    }
+
+    useEffect(() => {
+        setV(products)
+    }, [products])
+
     function deleteCart() {
         dispatch(deleteAll(products.length))
     }
@@ -109,14 +128,13 @@ function Cart() {
         return vProducts.length == 0
     }
 
-
     useEffect(() => {
         verify()
     }, [vProducts])
 
     return (
         <div className={styles.background}>
-            <div className={styles.modal} style={verify() ? {justifyContent: "flex-start", gap: "5vh"} : {justifyContent: "space-between"}}>
+            <div className={styles.modal} style={verify() ? { justifyContent: "flex-start", gap: "5vh" } : { justifyContent: "space-between" }}>
                 <Header />
                 <div className={styles.body}>
                     {
@@ -131,6 +149,7 @@ function Cart() {
                                                 key={i.code}
                                                 code={i.code}
                                                 deleteItem={() => deleteItem(i.code)}
+                                                increment={increment}
                                                 priceAmount={i.priceAmount}
                                                 name={i.name}
                                                 amount={i.amount}
@@ -139,10 +158,10 @@ function Cart() {
                                         ))
                                     }
                                 </div>
-                                <Reckoning tax={tax} valorFinal={final} totalValue={totalCart} buy={finishCart} deleteCart={deleteCart} />
+                                <Reckoning tax={tax} valorFinal={totalFinal} totalValue={totalCart} buy={finishCart} deleteCart={deleteCart} />
                             </>
                     }
-                    <Loader loader={loader}/>
+                    <Loader loader={loader} />
                 </div>
             </div>
         </div>

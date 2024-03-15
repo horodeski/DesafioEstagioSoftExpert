@@ -2,11 +2,14 @@ import React, { useState } from 'react'
 import CardProduct from '../../CardProduct'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '../../../../redux/CartFavorite/actions'
+import { addToCart, incrementAmount } from '../../../../redux/CartFavorite/actions'
 import { ProductsApi } from '../../../../services'
 
 function ProductsContent({ filteredProducts, allProducts }) {
     const dispatch = useDispatch()
+    const [amount, setAmount] = useState(1)
+
+    const { products } = useSelector(state => state.FCReducer)
 
     function objectToFormData(obj) {
         const formData = new FormData();
@@ -21,16 +24,15 @@ function ProductsContent({ filteredProducts, allProducts }) {
         await ProductsApi.updateProducts(data);
     }
 
-
     async function updateStock(code) {
         const findProduct = allProducts.find(i => i.code == code)
         const calc = findProduct.amount - amount
-        
+
         const data = {
             code: code,
             amount: calc
         }
-        
+
         const f_data = objectToFormData(data)
         putProduct(f_data)
     }
@@ -58,13 +60,14 @@ function ProductsContent({ filteredProducts, allProducts }) {
         const product = {
             name: findProducts.name,
             code: code,
-            amount: amount,
+            amount: 1,
             price: parseInt(findProducts.price),
             priceAmount: priceAmount,
             priceTaxed: priceTaxed,
             priceDifference: priceDifference(),
             taxPercent: parseInt(findProducts.tax)
         }
+        
         updateStock(product.code)
         dispatch(addToCart(product))
 
@@ -77,6 +80,9 @@ function ProductsContent({ filteredProducts, allProducts }) {
                     <CardProduct
                         key={product.code}
                         price={product.price}
+                        amount={amount}
+                        code={product.code}
+                        setAmount={setAmount}
                         productAmount={product.amount}
                         description={product.description}
                         category={product.category}

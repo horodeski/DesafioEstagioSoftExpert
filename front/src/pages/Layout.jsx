@@ -1,30 +1,22 @@
-import React from 'react'
-import { Cart, Favorite, NavBar, SideBar } from '../components/Common';
-import '../assets/styles/App.css'
-import { Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
+import { useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { Cart, NavBar, SideBar } from "../components/Common";
+import "../assets/styles/App.css";
 
 function Layout() {
-    const { isOpenModalCart, isOpenModalFavorite } = useSelector(state => state.uiReducer)
+    const { isOpenModalCart} = useSelector((state) => state.uiReducer);
 
     return (
-        <div id='app'>
+        <div id="app">
             <NavBar />
             <main>
                 <SideBar />
-                <div className='content'>
+                <div className="content">
                     <Outlet />
                 </div>
             </main>
-            {
-                isOpenModalCart &&
-                <Cart />
-            }
-            {
-                isOpenModalFavorite && 
-                <Favorite />
-            }
+            {isOpenModalCart && <Cart />}
             <ToastContainer
                 position="bottom-left"
                 autoClose={5000}
@@ -39,8 +31,7 @@ function Layout() {
                 transition:Slide
             />
         </div>
-    )
+    );
 }
-
 
 export default Layout;

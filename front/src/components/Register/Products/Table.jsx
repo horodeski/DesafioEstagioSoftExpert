@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 
 function Table({ products }) {
     const { isOpenModalRegister } = useSelector(state => state.uiReducer)
-    console.log(isOpenModalRegister)
     return (
         <div className={styles.contentTable}>
             <table>

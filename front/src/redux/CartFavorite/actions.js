@@ -30,3 +30,9 @@ export const deleteAll = (payload) => ({
     type: cartTypes.DELETE_ALL,
     payload
 });
+
+
+export const incrementAmount = (payload) => ({
+    type: cartTypes.INCREMENT_AMOUNT,
+    payload
+});

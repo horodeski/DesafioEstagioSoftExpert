@@ -6,7 +6,8 @@ include('../index.php');
 
 function getOrderItem()
 {
-    $order_item = myPDO->query('SELECT * FROM order_item');
+    $order_item = myPDO->query('SELECT order_item.*, products.name as product from order_item join products on order_item.product_code = products.code ORDER by code');    
+    
     $order_item = $order_item->fetchALL();
     return json_encode($order_item);
 };

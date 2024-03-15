@@ -7,8 +7,8 @@ const uiReducer = (state = uiState, action) => {
             return { ...state, isOpenModalRegister: action.payload };
         case uiTypes.SET_MODAL_CART:
             return { ...state, isOpenModalCart: action.payload };
-        case uiTypes.SET_MODAL_FAVORITE:
-            return { ...state, isOpenModalFavorite: action.payload };
+        case uiTypes.SET_MODAL_MORE_INFO:
+            return { ...state, isOpenMoreInfoOrder: action.payload };
         default:
             return state;
     }

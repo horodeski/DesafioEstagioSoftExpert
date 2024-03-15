@@ -1,7 +1,8 @@
 import React from 'react'
 
 import styles from "./Comprar.module.css"
-import { Products, Descontos, Categories } from '../../components/Buy';
+import { Products, Descontos } from '../../components/Buy';
+import History from '../../components/Buy/Sections/History/History';
 
 function Header() {
     return (
@@ -27,15 +28,8 @@ function Comprar() {
             <Header />
             <div className={styles.container}>
                 <Products />
-                <Categories />
                 <Descontos />
-
-                <section>
-                    <h3>Compras anteriores</h3>
-                    <div className={styles.allProducts}>
-                        <div className={styles.productCard}></div>
-                    </div>
-                </section>
+                <History />
             </div>
         </div>
     )
