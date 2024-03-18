@@ -94,6 +94,7 @@ function Cart() {
         sumPrices()
         finalCart()
         sumTax()
+        toast.success("Item descartado")
     }
 
     function objectToFormData(obj) {
@@ -160,6 +161,7 @@ function Cart() {
 
     function deleteCart() {
         dispatch(deleteAll(products.length))
+        toast.success("Carrinho descartado")
     }
 
     function itemsLength() {
