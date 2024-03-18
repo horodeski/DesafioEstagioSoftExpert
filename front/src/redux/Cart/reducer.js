@@ -15,7 +15,7 @@ const CartReducer = (state = CartState, action) => {
                   ...product,
                   amount: product.amount + 1,
                   priceAmount:
-                  product.price * (product.amount + 1),
+                  (product.price * (product.amount + 1)).toFixed(2),
                 }
       
                 : product
@@ -29,7 +29,7 @@ const CartReducer = (state = CartState, action) => {
                 ? {
                     ...product,
                     amount: product.amount + action.payload.amount,
-                    priceAmount: product.price + (product.price * product.amount),
+                    priceAmount: (product.price + (product.price * product.amount)).toFixed(2),
                   }
                 : product
             ),
@@ -74,7 +74,7 @@ const CartReducer = (state = CartState, action) => {
         products: state.products.map((product) => {
           if (product.code == action.payload) {    
             const newAmount = product.amount + 1
-              return { ...product, amount: newAmount, priceAmount: (product.amount + 1) * product.price };
+              return { ...product, amount: newAmount, priceAmount: ((product.amount + 1) * product.price).toFixed(2) };
           } else {
             return product;
           }
@@ -86,7 +86,7 @@ const CartReducer = (state = CartState, action) => {
         ...state,
         products: state.products.map((product) => {
           if (product.code == action.payload) {    
-              return { ...product, amount: product.amount > 1 ? product.amount - 1 : 1, priceAmount: product.amount > 1 ? (product.amount - 1) * product.price : (product.amount) * product.price };
+              return { ...product, amount: product.amount > 1 ? product.amount - 1 : 1, priceAmount: product.amount > 1 ? ((product.amount - 1) * product.price).toFixed(2) : ((product.amount) * product.price).toFixed(2) };
           } else {
             return product;
           }

@@ -12,10 +12,10 @@ function ProductsContent({ filteredProducts, allProducts }) {
         toast.success("Produto adicionado ao carrinho")
         const findProducts = allProducts.find(i => i.code == code)
         const priceAmount = amount * findProducts.price
-        const price = parseInt(findProducts.price)
+        const price = parseFloat(findProducts.price)
 
         function CalcTaxPercent() {
-            const tax = parseInt(findProducts.tax)
+            const tax = parseFloat(findProducts.tax)
             const priceTaxed = (price + price * (tax / 100))
             const final = priceTaxed.toFixed(2)
             return parseFloat(final)
@@ -32,11 +32,11 @@ function ProductsContent({ filteredProducts, allProducts }) {
             name: findProducts.name,
             code: code,
             amount: 1,
-            price: parseInt(findProducts.price),
+            price: parseFloat(findProducts.price),
             priceAmount: priceAmount,
             priceTaxed: priceTaxed,
             priceDifference: priceDifference(),
-            taxPercent: parseInt(findProducts.tax)
+            taxPercent: parseFloat(findProducts.tax)
         }
         
         dispatch(addToCart(product))
