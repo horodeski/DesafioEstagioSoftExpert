@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import Icon from "../Common/Icon"
 import styles from "./Buy.module.css"
 
@@ -14,11 +13,8 @@ function CardProduct({ name, category, description, price, toggleCart }) {
             <p>{description}</p>
             <div className={styles.right}>
                 <div className={styles.allButtons} onClick={toggleCart}>
-                    <button className='btn-blue'>
-                        Adicionar ao carrinho
-                    </button>
                     <button className='btn-green'>
-                        <Icon iconPath="ph ph-heart" />
+                        Adicionar ao carrinho
                     </button>
                 </div>
             </div>

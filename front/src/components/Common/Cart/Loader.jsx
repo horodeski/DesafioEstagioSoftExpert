@@ -1,7 +1,6 @@
-import React from 'react'
 import styles from "./Cart.module.css"
 
-export default function Loader({loader}) {
+function Loader({loader}) {
     return (
         <>
             {
@@ -16,3 +15,5 @@ export default function Loader({loader}) {
         </>
     )
 }
+
+export default Loader

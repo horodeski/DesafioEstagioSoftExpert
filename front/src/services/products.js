@@ -23,8 +23,8 @@ class ProductsApi {
     }
     return response.data
   }
-  async deleteProduct(product) {
-    const response = await api.delete(`/products/${product.id}/`)
+  async deleteProduct(code) {
+    const response = await api.post(`/products.php?op=DELETE`, code)
     return response.data
   }
 }

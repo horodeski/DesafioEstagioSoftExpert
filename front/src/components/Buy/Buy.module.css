@@ -6,6 +6,12 @@
 
 .titlePrice span:nth-child(1) {
     font-weight: 600;
+    width: 76%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     font-size: 1.4em;
 }
 
@@ -18,19 +24,19 @@
     padding: 1vw;
     background-color: #1a1a1a;
     width: 24.9vw;
+    position: relative;
     border: 1px solid var(--c-gray-600);
     border-radius: 10px;
     margin-bottom: 1vh;
 }
 
-.amount {
-    display: flex;
-    gap: .3vw;
-    margin: 1vh 0;
-}
 
-.amount button {
-    background-color: var(--c-gray-600);
+.productCard button {
+    position: absolute;
+    bottom: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    right: 0;
 }
 
 

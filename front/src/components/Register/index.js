@@ -1,6 +1,6 @@
-import SearchAddCategories from "./Categories/SearchAdd";
 import TableCategories from "./Categories/Table";
-import SearchAddProducts from "./Products/SearchAdd";
+import AddProducts from "./Products/AddProducts";
+import AddCategories from "./Categories/AddCategory";
 import TableProducts from "./Products/Table";
 
-export { SearchAddCategories, TableCategories, SearchAddProducts, TableProducts }
+export { TableCategories, AddProducts, TableProducts, AddCategories }

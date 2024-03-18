@@ -36,3 +36,8 @@ export const incrementAmount = (payload) => ({
     type: cartTypes.INCREMENT_AMOUNT,
     payload
 });
+
+export const decrementAmount = (payload) => ({
+    type: cartTypes.DECREMENT_AMOUNT,
+    payload
+});

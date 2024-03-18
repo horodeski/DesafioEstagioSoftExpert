@@ -1,22 +1,26 @@
-import React, { useCallback, useEffect, useState } from "react";
-
-import styles from "./Descontos.module.css";
-import CardProduct from "../../CardProduct";
-import Icon from "../../../Common/Icon";
+import { useEffect, useState } from "react";
 import { ProductsApi } from "../../../../services";
+import CardProduct from "../../CardProduct";
+import { Empty } from "../../../Common";
+import styles from "./Descontos.module.css";
 
 function Descontos() {
   const [allProducts, setAllProducts] = useState([]);
-  const [lessPrice, setLessPrice] = useState([]) 
+  const [lessPrice, setLessPrice] = useState([])
   const [amount, setAmount] = useState(1);
 
   const getProducts = async () => {
     const data = await ProductsApi.getProducts();
     setAllProducts(data);
-    const productsLessPrice = allProducts.filter((product) => product.price < 20)
+    const productsLessPrice = allProducts.filter((product) => product.price < 15)
     setLessPrice(productsLessPrice)
-  };
-  // getProducts()
+  }
+
+  useEffect(() => {
+    getProducts()
+
+  }, [])
+
   function increment() {
     setAmount(amount + 1)
   }
@@ -29,23 +33,27 @@ function Descontos() {
 
   return (
     <section>
-      <h3>Aproveite os descontos da semana</h3>
+      <h3>Ultimos no estoque</h3>
       <div className={styles.allProducts}>
-        <div className={styles.allProducts}>
-          {lessPrice.map((product) => (
-            <CardProduct
-              key={product.code}
-              price={product.price}
-              amount={amount}
-              description={product.description}
-              category={product.category}
-              increment={increment}
-              decrement={decrement}
-              name={product.name}
+        {
+          lessPrice.length > 1 ?
 
-            />
-          ))}
-        </div>
+            lessPrice.map((product) => (
+              <CardProduct
+                key={product.code}
+                price={product.price}
+                amount={amount}
+                description={product.description}
+                category={product.category}
+                increment={increment}
+                decrement={decrement}
+                name={product.name}
+
+              />
+            ))
+            :
+            <Empty text={"Estoque cheio"} />
+        }
       </div>
     </section>
   );

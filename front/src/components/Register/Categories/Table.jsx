@@ -28,10 +28,7 @@ function Table({ categories, productsData }) {
                     }
                 </tbody>
             </table>
-            {
-                isOpenModalRegister &&
-                <ModalCategory />
-            }
+
         </div>
     )
 }

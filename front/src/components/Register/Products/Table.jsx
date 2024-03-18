@@ -1,11 +1,7 @@
-import React from 'react'
-import styles from "./Products.module.css"
 import LineTable from './LineTable'
-import ModalProduct from './ModalProduct'
-import { useSelector } from 'react-redux'
+import styles from "./Products.module.css"
 
 function Table({ products }) {
-    const { isOpenModalRegister } = useSelector(state => state.uiReducer)
     return (
         <div className={styles.contentTable}>
             <table>
@@ -30,10 +26,7 @@ function Table({ products }) {
                     }
                 </tbody>
             </table>
-            {
-                isOpenModalRegister &&
-                <ModalProduct />
-            }
+           
         </div>
     )
 }

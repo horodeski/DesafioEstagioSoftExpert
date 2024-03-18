@@ -1,11 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import CardProduct from "../../CardProduct";
 import { ProductsApi } from "../../../../services";
-import { useDispatch, useSelector } from "react-redux";
-import styles from "./Products.module.css";
-import { addToCart } from "../../../../redux/CartFavorite/actions";
-import { toast } from "react-toastify";
 import { ProductsContent, SeeMore } from "./";
+import { Empty } from "../../../Common";
+import styles from "./Products.module.css";
 
 function Products() {
   const [searchValue, setSearchValue] = useState("");
@@ -15,21 +12,21 @@ function Products() {
   const [initialProducts, setInitialProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [amount, setAmount] = useState(1);
-  
+
 
 
   const getProducts = useCallback(async () => {
     const data = await ProductsApi.getProducts();
     setAllProducts(data);
-    
+
     if (seeMoreState) {
       setInitialProducts(data.slice(6).reverse());
     } else {
       setInitialProducts(data.splice(6));
     }
-  
+
     setFilteredProducts(data);
-  
+
   }, [seeMoreState]);
 
   const handleSearchChange = (newValue) => {
@@ -47,18 +44,16 @@ function Products() {
     setSeeMoreState(!seeMoreState);
     getProducts();
   }
-  
+
   useEffect(() => {
     getProducts();
-  }, [getProducts]);
+  }, []);
 
   return (
     <section>
       <h3>Navegue por nossos produtos</h3>
       {allProducts.length == 0 ? (
-        <>
-          <span>não há produtos cadastrados em nosso sistema</span>
-        </>
+        <Empty text={"não há produtos cadastrados em nosso sistema"} />
       ) : (
         <div className={styles.allProducts}>
           <div className={styles.search}>

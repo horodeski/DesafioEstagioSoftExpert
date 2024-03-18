@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import styles from './SideBar.module.css';
-import { useLocation, Link } from "react-router-dom";
-import Item from './Item';
+import { useState } from 'react';
+import {  Link } from "react-router-dom";
 import { optionsSideBar, dropdownOptions } from '../../../helpers/Mock';
+import Item from './Item';
 import Icon from '../Icon';
+import styles from './SideBar.module.css';
 
 
 function DropdownItem({ description, options, icon }) {
@@ -29,18 +29,13 @@ function DropdownItem({ description, options, icon }) {
 }
 
 function SideBar() {
-    // const pathname = useLocation().pathname
-    // console.log(pathname)
-
     return (
         <nav className={styles.sidebar}>
             <ul className={styles.options}>
                 <>
                     {
                         optionsSideBar.map((item) => (
-                          
-                                <Item key={item.name} path={item.path} name={item.name} icon={item.icon} />
-                          
+                            <Item key={item.name} path={item.path} name={item.name} icon={item.icon} />
                         ))
                     }
                 </>

@@ -1,36 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { SearchAddProducts, TableProducts } from '../../../components/Register';
+import { useEffect, useState } from 'react';
+import { AddProducts, TableProducts } from '../../../components/Register';
 import { ProductsApi } from '../../../services';
+import { Empty } from '../../../components/Common';
+import ModalProduct from '../../../components/Register/Products/ModalProduct';
+import { useSelector } from 'react-redux';
 
 export default function Products() {
-  const [searchValue, setSearchValue] = useState('');
   const [allProducts, setAllProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const { isOpenModalRegister } = useSelector(state => state.uiReducer)
 
   async function getProducts() {
     const data = await ProductsApi.getProducts();
     setAllProducts(data);
-    setFilteredProducts(data);
   }
-  const handleSearchChange = (newValue) => {
-    setSearchValue(newValue);
-    
-    const filtered = allProducts.filter((product) =>
-    product.name.toLowerCase().includes(newValue.toLowerCase())
-    );
-    
-    setFilteredProducts(filtered);
-  };
-
 
   useEffect(() => {
     getProducts();
   }, []);
 
+  useEffect(() => {
+    getProducts();
+  }, [allProducts]);
+
   return (
     <>
-      <SearchAddProducts searchValue={searchValue} onSearchChange={handleSearchChange} />
-      <TableProducts products={filteredProducts} />
+      <AddProducts />
+      {
+        allProducts.length >= 1 ?
+          <TableProducts products={allProducts} />
+
+          :
+          <Empty text={"Não há produtos registrados em nosso sistema"} />
+      }
+      {
+        isOpenModalRegister &&
+        <ModalProduct />
+      }
     </>
   );
 }

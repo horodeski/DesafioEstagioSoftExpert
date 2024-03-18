@@ -1,15 +1,17 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Icon } from '../../Common'
 import styles from "./Categories.module.css"
 import { CategoriesApi } from '../../../services'
+import { toast } from 'react-toastify'
 
 function LineTable({ code, name, tax, category, productsData }) {
+    const [categoryProduct, setProductCategory] = useState(0)
 
-    const findProducts = useCallback(() => {
+    const findProducts = () => {
         const findCategory = productsData.filter(i => i.category == category.name)
         const obj = Object.keys(findCategory)
-        return obj.length
-    }, [category, productsData])
+        setProductCategory(obj.length)
+    }
 
     function objectToFormData(obj) {
         const formData = new FormData();
@@ -21,31 +23,25 @@ function LineTable({ code, name, tax, category, productsData }) {
         return formData;
     }
 
-    // function deleteCategory(code) {
-    //     const codeObj = {
-    //         code: code
-    //     }
+    async function deleteCategory(code) {
+        const codeFormData = objectToFormData(code)
+        await CategoriesApi.deleteCategory(codeFormData)
+        toast.success("Categoria removida do sistema")
+    }
 
-    //     const codeFormData = objectToFormData(codeObj)
-    //     CategoriesApi.deleteCategory(codeFormData)
-    // }
-
-    // useEffect(() => {
-    //     deleteCategory()
-    // })
+    useEffect(() => {
+        findProducts()
+    }, [])
 
     return (
         <tr>
             <td>#{code}</td>
             <td>{name}</td>
             <td>{tax}</td>
-            <td>{findProducts()}</td>
+            <td>{categoryProduct}</td>
             <td>
                 <div className={styles.allButtons}>
-                    <button>
-                        <Icon iconPath={"ph ph-pencil-simple-line"} />
-                    </button>
-                    <button>
+                    <button onClick={() => deleteCategory({ code })}>
                         <Icon iconPath={"ph ph-trash"} />
                     </button>
                 </div>

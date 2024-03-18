@@ -39,7 +39,7 @@ export default function ModalCategory() {
 
     async function postCategory() {
        
-        if (name != undefined && tax != undefined) {
+        if (name != "" && tax != "") {
             const categoryFormData = objectToFormData(formValues)
             await CategoriesApi.postCategory(categoryFormData);
             setFormValues({ name: '', tax: '' });

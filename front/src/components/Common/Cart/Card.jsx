@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import Icon from '../Icon'
 import styles from "./Cart.module.css"
-import { incrementAmount } from '../../../redux/CartFavorite/actions'
 
-function Card({ price, name, amount, priceAmount, code, deleteItem, increment}) {
- 
+
+function Card({ price, name, amount, priceAmount, code, deleteItem, increment, decrement }) {
+
     return (
         <div className={styles.card}>
             <button className={styles.deletebtn} onClick={() => { deleteItem(code) }}>
@@ -19,8 +17,9 @@ function Card({ price, name, amount, priceAmount, code, deleteItem, increment}) 
                 <div className={styles.priceAmount}>
                     <span>R${priceAmount}</span>
                     <div className={styles.amount}>
+                        <button onClick={() => { decrement(code) }}>-</button>
                         <span>{amount} Unids.</span>
-                        <button onClick={() => { increment(code)}}>+</button>
+                        <button onClick={() => { increment(code) }}>+</button>
                     </div>
                 </div>
             </div>

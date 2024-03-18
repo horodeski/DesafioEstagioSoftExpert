@@ -1,8 +1,6 @@
-import React from 'react'
-import Icon from '../Icon'
 import { useDispatch } from 'react-redux'
 import { setModalCart } from '../../../redux/ui/actions'
-
+import Icon from '../Icon'
 import styles from "./Cart.module.css"
 
 function Header() {

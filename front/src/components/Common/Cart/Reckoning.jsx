@@ -1,9 +1,6 @@
-import React, { useState } from 'react'
 import styles from "./Cart.module.css"
-import Icon from '../Icon'
 
 function Item({ desc, value }) {
-
     return (
         <>
             <div className={styles.list}>
@@ -14,6 +11,7 @@ function Item({ desc, value }) {
         </>
     )
 }
+
 function Reckoning({ totalValue, tax, valorFinal, buy, deleteCart }) {
 
     const allItems = [

@@ -1,6 +1,4 @@
-import React from 'react'
 import Icon from '../../../Common/Icon'
-
 import styles from "./Products.module.css"
 
 function SeeMore({ seeMore, seeMoreState }) {

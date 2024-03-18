@@ -1,10 +1,9 @@
-import React from 'react'
-import styles from "./Categories.module.css"
 import { setModalRegister } from '../../../redux/ui/actions'
 import { useDispatch } from 'react-redux'
+import styles from "./Categories.module.css"
 
 
-function SearchAdd({ searchValue, onSearchChange }) {
+function AddCategory() {
     const dispatch = useDispatch()
 
     function toggleModal() {
@@ -13,11 +12,6 @@ function SearchAdd({ searchValue, onSearchChange }) {
 
     return (
         <div className={styles.search}>
-            <input type="text" value={searchValue}
-                onChange={(e) => onSearchChange(e.target.value)} placeholder='Pesquisar Categoria' />
-            <button>
-                pesquisar
-            </button>
             <button className='btn-blue' onClick={toggleModal}>
                 <span>
                     + Adicionar categoria
@@ -28,4 +22,4 @@ function SearchAdd({ searchValue, onSearchChange }) {
 }
 
 
-export default SearchAdd
+export default AddCategory

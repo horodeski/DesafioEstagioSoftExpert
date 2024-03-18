@@ -50,22 +50,27 @@ export default function ModalProduct() {
     }
 
     async function postProduct() {
+        if (nameProduct != "" && priceProduct != "" && descProduct != "" && amountProduct != "" && category_code != "") {
 
-        const productFormData = objectToFormData(formValues)
-        await ProductsApi.postProducts(productFormData);
-        setFormValues({
-            name: "",
-            price: "",
-            description: "",
-            amount: "",
-            category_code: ""
-        });
-        dispatch(setModalRegister(false))
-        toast.success("Produto Criado")
+            const productFormData = objectToFormData(formValues)
+            await ProductsApi.postProducts(productFormData);
+            setFormValues({
+                name: "",
+                price: "",
+                description: "",
+                amount: "",
+                category_code: ""
+            });
+            dispatch(setModalRegister(false))
+            toast.success("Produto Criado")
+        } else {
+            toast.warning("Preencha todos os inputs")
+
+        }
 
     }
 
-    function teste(priceProduct, category_code) {
+    function updateFields(priceProduct, category_code) {
         const categorySelected = categories.find(i => i.code == category_code)
         if (categorySelected) {
             const calc = (priceProduct * (categorySelected.tax / 100)).toFixed(2);
@@ -134,7 +139,7 @@ export default function ModalProduct() {
                             <textarea
                                 value={descProduct}
                                 onChange={(e) => setDescription(e.target.value)}
-                                placeholder='Valor em real'
+                                placeholder='Descrição do produto'
                                 type="number"
                                 name="taxa"
 
@@ -156,7 +161,7 @@ export default function ModalProduct() {
                                 <span>
                                     Tax:
                                 </span>
-                                <span>{teste(priceProduct, category_code)}</span>
+                                <span>{updateFields(priceProduct, category_code)}</span>
                             </div>
                         </div>
                     </div>

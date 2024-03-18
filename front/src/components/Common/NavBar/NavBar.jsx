@@ -9,7 +9,7 @@ export default function NavBar() {
   return (
     <nav className={styles.navBar}>
       <div className={styles.logoSection}>
-        <h1>SESuite</h1>
+        <h1>SESTORE</h1>
       </div>
       <div className={styles.right}>
         <div className={styles.buttons}>

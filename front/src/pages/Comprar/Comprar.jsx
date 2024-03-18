@@ -1,8 +1,5 @@
-import React from 'react'
-
-import styles from "./Comprar.module.css"
 import { Products, Descontos } from '../../components/Buy';
-import History from '../../components/Buy/Sections/History/History';
+import styles from "./Comprar.module.css"
 
 function Header() {
     return (
@@ -29,7 +26,6 @@ function Comprar() {
             <div className={styles.container}>
                 <Products />
                 <Descontos />
-                <History />
             </div>
         </div>
     )

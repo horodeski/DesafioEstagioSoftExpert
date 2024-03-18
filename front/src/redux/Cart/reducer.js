@@ -1,7 +1,7 @@
 import { CartState } from "./initialState";
 import { cartTypes } from "./types";
 
-const FCReducer = (state = CartState, action) => {
+const CartReducer = (state = CartState, action) => {
   switch (action.type) {
     case cartTypes.ADD_TO_CART: {
       const verify = state.products.some((i) => i.code == action.payload.code);
@@ -12,17 +12,12 @@ const FCReducer = (state = CartState, action) => {
             products: state.products.map((product) =>
               product.code === action.payload.code
                 ? {
-                    ...product,
-                    amount: product.amount + action.payload.amount,
-                    priceAmount:
-                      product.price * (1 + product.amount),
-                  }
-                : product.amount > 1 && action.payload.amount == 1
-                ? {
-                    ...product,
-                    amount: product.amount + action.payload.amount,
-                    priceAmount: product.priceAmount + product.price,
-                  }
+                  ...product,
+                  amount: product.amount + 1,
+                  priceAmount:
+                  product.price * (product.amount + 1),
+                }
+      
                 : product
             ),
           };
@@ -34,7 +29,7 @@ const FCReducer = (state = CartState, action) => {
                 ? {
                     ...product,
                     amount: product.amount + action.payload.amount,
-                    priceAmount: product.price + product.price,
+                    priceAmount: product.price + (product.price * product.amount),
                   }
                 : product
             ),
@@ -78,7 +73,20 @@ const FCReducer = (state = CartState, action) => {
         ...state,
         products: state.products.map((product) => {
           if (product.code == action.payload) {    
-              return { ...product, amount: product.amount + 1, priceAmount: (product.amount + 1) * product.price };
+            const newAmount = product.amount + 1
+              return { ...product, amount: newAmount, priceAmount: (product.amount + 1) * product.price };
+          } else {
+            return product;
+          }
+        }),
+      };
+    }
+    case cartTypes.DECREMENT_AMOUNT: {
+      return {
+        ...state,
+        products: state.products.map((product) => {
+          if (product.code == action.payload) {    
+              return { ...product, amount: product.amount > 1 ? product.amount - 1 : 1, priceAmount: product.amount > 1 ? (product.amount - 1) * product.price : (product.amount) * product.price };
           } else {
             return product;
           }
@@ -90,4 +98,4 @@ const FCReducer = (state = CartState, action) => {
   }
 };
 
-export default FCReducer;
+export default CartReducer;

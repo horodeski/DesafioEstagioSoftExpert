@@ -1,9 +1,8 @@
 import Header from './Header'
 import Card from './Card'
 import styles from "../history.module.css"
-import Result from './Result'
 
-function MoreInfoModal({ allProducts, totalValue, tax }) {
+function MoreInfoModal({ allProducts }) {
     return (
         <div className={styles.background}>
             <div className={styles.modal}>
@@ -15,7 +14,6 @@ function MoreInfoModal({ allProducts, totalValue, tax }) {
                         ))
                     }
                 </div>
-                <Result totalValue={totalValue} tax={tax}/>
             </div>
         </div>
     )

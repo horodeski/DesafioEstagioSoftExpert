@@ -1,28 +1,20 @@
 import { useEffect, useState } from 'react'
-import { SearchAddCategories, TableCategories } from '../../../components/Register'
+import { AddCategories, TableCategories } from '../../../components/Register'
 import { CategoriesApi, ProductsApi } from '../../../services'
+import { Empty } from '../../../components/Common'
+import { useSelector } from 'react-redux'
+import ModalCategory from '../../../components/Register/Categories/ModalCategory'
 
 
 function Categories() {
-  const [searchValue, setSearchValue] = useState('');
   const [categoriesData, setCategoriesData] = useState([])
   const [productsData, setProductsData] = useState([])
-  const [filteredCategories, setFilteredCategories] = useState([]);
+
+  const { isOpenModalRegister } = useSelector(state => state.uiReducer)
 
   const getCategories = async () => {
     const data = await CategoriesApi.getCategories();
     setCategoriesData(data);
-    setFilteredCategories(data)
-  };
-
-  const handleSearchChange = (newValue) => {
-    setSearchValue(newValue);
-    
-    const filtered = categoriesData.filter((category) =>
-    category.name.toLowerCase().includes(newValue.toLowerCase())
-    );
-    
-    setFilteredCategories(filtered);
   };
 
   const getProducts = async () => {
@@ -30,16 +22,27 @@ function Categories() {
     setProductsData(data);
   };
 
+  useEffect(() => {
+    getProducts()
+  }, [productsData]);
 
   useEffect(() => {
     getCategories();
-    getProducts()
-  }, []);
+  }, [categoriesData])
 
   return (
     <>
-      <SearchAddCategories searchValue={searchValue} onSearchChange={handleSearchChange}/>
-      <TableCategories productsData={productsData} categories={filteredCategories} />
+      <AddCategories />
+      {
+        categoriesData.length >= 1 ?
+          <TableCategories productsData={productsData} categories={categoriesData} />
+          :
+          <Empty text={"Não há categorias registradas em nosso sistema"} />
+      }
+      {
+        isOpenModalRegister &&
+        <ModalCategory />
+      }
     </>
   )
 }
