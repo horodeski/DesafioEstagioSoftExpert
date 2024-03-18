@@ -49,10 +49,9 @@ function Cart() {
     }
 
     function updateStock(code, amount) {
-        console.log(code, amount)
         const findProduct = allProducts.find((i) => i.code == code)
         const calc = findProduct.amount - amount
-        console.log(calc)
+
         if (calc > 1 && calc <= findProduct.amount) {
             const data = {
                 code: code,

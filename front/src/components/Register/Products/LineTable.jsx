@@ -28,9 +28,7 @@ function LineTable({ name, code, price, category, tax, amount }) {
         return formData;
     }
 
-    function teste (){
-        console.log("asdasd")
-    }
+    function empty(){}
 
     async function deleteProduct(code) {
         const codeFormData = objectToFormData(code)
@@ -43,8 +41,8 @@ function LineTable({ name, code, price, category, tax, amount }) {
             <td>#{code}</td>
             <td>{name}</td>
             <td
-                onMouseEnter={amount <= 10 ? sendAlert : teste}
-                onMouseOut={amount <= 10 ? sendAlert : teste}
+                onMouseEnter={amount <= 10 ? sendAlert : empty}
+                onMouseOut={amount <= 10 ? sendAlert : empty}
                 className={styles.amount}
                 style={amount <= 10 ? { color: "red" } : { color: "white" }}
             >

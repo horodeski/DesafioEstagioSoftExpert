@@ -6,8 +6,7 @@ function Card({ price, name, amount, priceAmount, code, deleteItem, increment })
         {name}
       </h3>
       <span>
-      {amount} Unids.
-
+        {amount} Unids.
       </span>
       <span className={styles.unitPrice}>R${price}/Item</span>
     </div>
