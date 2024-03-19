@@ -62,5 +62,15 @@ ALTER TABLE PRODUCTREQUEST ADD FOREIGN KEY (CDPRODUCT) REFERENCES PRODUCT(CDPROD
 -- Lista 1 - d) Crie um índice para chave estrangeira da tabela de produtos 
 
 CREATE INDEX IDX_SUPPLIER ON PRODUCT(CDSUPPLIER)
+	
+-- Lista 1 - e) Crie um índice para chave estrangeira da tabela de pedidos 
 
 CREATE INDEX IDX_CUSTOMER ON REQUEST(CDCUSTOMER)
+
+-- Lista 1) - f) Adicione o campo endereço na tabela de fornecedores
+
+ALTER TABLE SUPPLIER ADD DSADRESS VARCHAR(255)
+
+-- Lista 1) - g) Faça inserção de um novo cliente.
+
+INSERT INTO CUSTOMER(CDCUSTOMER, NMCUSTOMER, NRFONE, DSADRESS) VALUES (1, 'Fabiano', 99879375, 'Rua Tijucas, 110, Centro, Joinville – S.C')
